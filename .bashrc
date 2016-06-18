@@ -57,4 +57,6 @@ alias install="sudo apt-get install"
 alias grep='grep --color=auto'
 remsync() { rsync -avzP -e ssh "$@"; }
 alias remsync-anime="remsync rbon@nu.jercos.moe:/home/rbon/www/anime/ /home/robin/Videos/Anime/"
+alias tags-on="tagsistant ~/media"
+alias tags-off="fusermount -u ~/media"
 
