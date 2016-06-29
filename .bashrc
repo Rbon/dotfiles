@@ -53,7 +53,8 @@ cl() { cd "$@" && ls; }
 alias ssh-atlas="ssh robin@192.168.1.104"
 alias ssh-nu="ssh rbon@nu.jercos.moe"
 #alias tmux="tmux source-file ~/.config/tmux.conf"
-alias install="sudo apt-get install"
+alias install="sudo pacman -S"
+# alias install="sudo apt-get install"
 alias grep='grep --color=auto'
 remsync() { rsync -avzP -e ssh "$@"; }
 alias remsync-anime="remsync rbon@nu.jercos.moe:/home/rbon/www/anime/ /home/robin/Videos/Anime/"
