@@ -1,9 +1,10 @@
 #! /usr/bin/env bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+rsync -av $DIR/src/ ~/
 
-cp $DIR/.bashrc ~/
-echo "Installed ~/.bashrc"
-cp $DIR/.tmux.conf ~/
-echo "Installed ~/.tmux.conf"
+#cp $DIR/.bashrc ~/
+#echo "Installed ~/.bashrc"
+#cp $DIR/.tmux.conf ~/
+#echo "Installed ~/.tmux.conf"
 
