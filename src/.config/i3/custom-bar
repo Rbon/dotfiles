@@ -1,24 +1,24 @@
 #! /usr/bin/env bash
 
-xrs="$HOME/.Xresources"
+resources="xrdb -query"
 
 ## Fetch the Colors
-color_bg=$(cat ${xrs} | grep -i background | tail -c 8)
-color_fg=$(cat ${xrs} | grep -i foreground | tail -c 8)
-black=$(cat ${xrs}    | grep -i color8     | tail -c 8)
-red=$(cat ${xrs}      | grep -i color9     | tail -c 8)
-green=$(cat ${xrs}    | grep -i color10    | tail -c 8)
-yellow=$(cat ${xrs}   | grep -i color11    | tail -c 8)
-blue=$(cat ${xrs}     | grep -i color12    | tail -c 8)
-magenta=$(cat ${xrs}  | grep -i color13    | tail -c 8)
-cyan=$(cat ${xrs}     | grep -i color14    | tail -c 8)
-white=$(cat ${xrs}    | grep -i color15    | tail -c 8)
+background=$(${resources} | grep -i background | tail -c 8)
+foreground=$(${resources} | grep -i foreground | tail -c 8)
+black=$(${resources}      | grep -i color8     | tail -c 8)
+red=$(${resources}        | grep -i color9     | tail -c 8)
+green=$(${resources}      | grep -i color10    | tail -c 8)
+yellow=$(${resources}     | grep -i color11    | tail -c 8)
+blue=$(${resources}       | grep -i color12    | tail -c 8)
+magenta=$(${resources}    | grep -i color13    | tail -c 8)
+cyan=$(${resources}       | grep -i color14    | tail -c 8)
+white=$(${resources}      | grep -i color15    | tail -c 8)
 
 ## Fonts
-#font1="-gohu-gohufont-medium-r-normal--14-100-100-100-c-80-iso10646-1"
-#font2="-gohu-gohufont-bold-r-normal--14-100-100-100-c-80-iso10646-1"
-#font3='-*-tamsyn-medium-r-normal-*-12-*-*-*-*-*-*-1'
-#font4='-wuncon-siji-medium-r-normal--17-*-*-*-*-*-*-*'
+font1="-windows-dina-medium-r-*-*-10-*-*-*-*-*-*-*"
+# font2="-gohu-gohufont-bold-r-normal--14-100-100-100-c-80-iso10646-1"
+# font3='-*-tamsyn-medium-r-normal-*-12-*-*-*-*-*-*-1'
+# font4='-wuncon-siji-medium-r-normal--17-*-*-*-*-*-*-*'
 
 ## Dimentions
 mon_w=$(xrandr | grep -o -G "current [0-9]*" | tail -c 5)
@@ -55,6 +55,10 @@ while :; do
   echo " $(workspaces) %{r} $(clock) "
   sleep 1.0
 done \
-  | lemonbar -d -g ${dimentions} -B "#383C4A" -F "#D7D0C7" \
+  | lemonbar -d \
+    -g ${dimentions} \
+    -B ${background} \
+    -F ${foreground} \
+    -f ${font1} \
   | while read line; do eval $line; done &
 #while read line; do eval $line; done >/dev/null 2>&1 &
