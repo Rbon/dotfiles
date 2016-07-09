@@ -5,15 +5,14 @@ xrs="$HOME/.Xresources"
 ## Fetch the Colors
 color_bg=$(cat ${xrs} | grep -i background | tail -c 8)
 color_fg=$(cat ${xrs} | grep -i foreground | tail -c 8)
-
-black=$(cat ${xrs} | grep -i color8 | tail -c 8)
-red=$(cat ${xrs} | grep -i color9 | tail -c 8)
-green=$(cat ${xrs} | grep -i color10 | tail -c 8)
-yellow=$(cat ${xrs} | grep -i color11 | tail -c 8)
-blue=$(cat ${xrs} | grep -i color12 | tail -c 8)
-magenta=$(cat ${xrs} | grep -i color13 | tail -c 8)
-cyan=$(cat ${xrs} | grep -i color14 | tail -c 8)
-white=$(cat ${xrs} | grep -i color15 | tail -c 8)
+black=$(cat ${xrs}    | grep -i color8     | tail -c 8)
+red=$(cat ${xrs}      | grep -i color9     | tail -c 8)
+green=$(cat ${xrs}    | grep -i color10    | tail -c 8)
+yellow=$(cat ${xrs}   | grep -i color11    | tail -c 8)
+blue=$(cat ${xrs}     | grep -i color12    | tail -c 8)
+magenta=$(cat ${xrs}  | grep -i color13    | tail -c 8)
+cyan=$(cat ${xrs}     | grep -i color14    | tail -c 8)
+white=$(cat ${xrs}    | grep -i color15    | tail -c 8)
 
 ## Fonts
 #font1="-gohu-gohufont-medium-r-normal--14-100-100-100-c-80-iso10646-1"
