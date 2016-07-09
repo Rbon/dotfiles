@@ -1,8 +1,8 @@
 ## Workspace names
 set $mod Mod1
-set $workspace1  "1-web"
-set $workspace2  "2-txt"
-set $workspace3  "3-img"
+set $workspace1  "1"
+set $workspace2  "2"
+set $workspace3  "3"
 set $workspace4  "4"
 set $workspace5  "5"
 set $workspace6  "6"
@@ -11,7 +11,7 @@ set $workspace8  "8"
 set $workspace9  "9"
 set $workspace10 "10-music"
 
-# Keybinds
+## Keybinds
 bindsym $mod+Return          exec urxvt -cd "`xcwd`"
 bindsym $mod+Shift+Return    exec urxvt
 bindsym $mod+d               exec dmenu_run -b
@@ -20,7 +20,7 @@ bindsym $mod+j               focus left
 bindsym $mod+Left            focus left
 bindsym $mod+Down            focus down
 bindsym $mod+k               focus down
-bindsym $mod+l               focus up
+# bindsym $mod+l               focus up
 bindsym $mod+Up              focus up
 bindsym $mod+semicolon       focus right
 bindsym $mod+Right           focus right
@@ -41,7 +41,7 @@ bindsym $mod+e               layout toggle split
 bindsym $mod+f               floating toggle
 bindsym $mod+Shift+f         focus mode_toggle
 bindsym $mod+a               focus parent
-#bindsym $mod+d               focus child
+# bindsym $mod+d               focus child
 bindsym $mod+1               workspace $workspace1
 bindsym $mod+2               workspace $workspace2
 bindsym $mod+3               workspace $workspace3
@@ -68,12 +68,14 @@ bindsym $mod+Shift+r         restart
 #bindsym button5              nop
 bindsym $mod+Tab             workspace back_and_forth
 bindsym $mod+Shift+q         exec "i3-msg exit"
-bindsym Print                exec "scrot '%F_%T.png' -e 'mv $f ~/Pictures/screenshots/'"
+bindsym $mod+l               exec slock
+bindsym Print      exec "scrot '%F_%T.png' -e 'mv $f ~/Pictures/screenshots/'"
+
 
 ## Assign applications to workspaces
-assign [class="Firefox"] $workspace1
-assign [class="Steam"]   $workspace9
-#assign [class="Gedit"]   $workspace2
+# assign [class="Firefox"] $workspace1
+# assign [class="Steam"]   $workspace9
+# assign [class="Gedit"]   $workspace2
 
 ## programs set to open floating
 for_window [class="feh"] floating enable

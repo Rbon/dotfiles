@@ -1,22 +1,21 @@
 #! /usr/bin/env bash
 
-## Color directory
-#CD="$HOME/.Xresources"
+xrs="$HOME/.Xresources"
 
-# Fetch the Colors
-#BG=$(cat ${CD} | grep -i background | tail -c 8)
-#FG=$(cat ${CD} | grep -i foreground | tail -c 8)
+## Fetch the Colors
+color_bg=$(cat ${xrs} | grep -i background | tail -c 8)
+color_fg=$(cat ${xrs} | grep -i foreground | tail -c 8)
 
-#BLACK=$(cat ${CD} | grep -i color8 | tail -c 8)
-#RED=$(cat ${CD} | grep -i color9 | tail -c 8)
-#GREEN=$(cat ${CD} | grep -i color10 | tail -c 8)
-#YELLOW=$(cat ${CD} | grep -i color11 | tail -c 8)
-#BLUE=$(cat ${CD} | grep -i color12 | tail -c 8)
-#MAGENTA=$(cat ${CD} | grep -i color13 | tail -c 8)
-#CYAN=$(cat ${CD} | grep -i color14 | tail -c 8)
-#WHITE=$(cat ${CD} | grep -i color15 | tail -c 8)
+black=$(cat ${xrs} | grep -i color8 | tail -c 8)
+red=$(cat ${xrs} | grep -i color9 | tail -c 8)
+green=$(cat ${xrs} | grep -i color10 | tail -c 8)
+yellow=$(cat ${xrs} | grep -i color11 | tail -c 8)
+blue=$(cat ${xrs} | grep -i color12 | tail -c 8)
+magenta=$(cat ${xrs} | grep -i color13 | tail -c 8)
+cyan=$(cat ${xrs} | grep -i color14 | tail -c 8)
+white=$(cat ${xrs} | grep -i color15 | tail -c 8)
 
-# Fonts
+## Fonts
 #font1="-gohu-gohufont-medium-r-normal--14-100-100-100-c-80-iso10646-1"
 #font2="-gohu-gohufont-bold-r-normal--14-100-100-100-c-80-iso10646-1"
 #font3='-*-tamsyn-medium-r-normal-*-12-*-*-*-*-*-*-1'
@@ -28,31 +27,35 @@ bar_w=$(expr $mon_w - 32)
 bar_h=24
 bar_x=16
 bar_y=16
+dimentions="${bar_w}x${bar_h}+${bar_x}+${bar_y}"
 
-#echo $mon_w
-#echo $bar_w
-#echo $bar_h
-#echo $bar_x
-#echo $bar_y
-
+## Workspace info.
 workspaces(){
-	output=""
-	desktop=$(i3-msg -t get_workspaces | jq '.[].name' | sed -e 's/^"//'  -e 's/"$//')
-	for line in  $desktop; do
-		output="$output %{A:i3-msg workspace $line:} $(echo $line | sed s/^[0-9*]-//)%{A}"
-	done
-	echo $output
+  output=""
+  desktop="$(i3-msg -t get_workspaces \
+    | jq '.[].name' \
+    | sed -e 's/^"//' -e 's/"$//')"
+  
+  for line in  $desktop; do
+    output="$output %{A:i3-msg workspace $line:} \
+    $(echo $line | sed s/^[0-9*]-//)%{A}"
+  done
+  
+  echo $output
 }
 
 clock(){
-	echo $(date '+%H:%M - %A, %B %d - %Y')
+  echo $(date '+%H:%M - %A, %B %d - %Y')
 }
 
+## Bar for compositor to turn into empty space around main bar.
 echo | lemonbar -n bar_invisible -g "1x40" -p &
 
+## Main bar.
 while :; do
-	echo " $(workspaces) %{r} $(clock) "
-	sleep 1.0
-done | lemonbar -d -g "${bar_w}x${bar_h}+${bar_x}+${bar_y}" -B "#383C4A" -F "#D7D0C7" | \
-while read line; do eval $line; done &
+  echo " $(workspaces) %{r} $(clock) "
+  sleep 1.0
+done \
+  | lemonbar -d -g ${dimentions} -B "#383C4A" -F "#D7D0C7" \
+  | while read line; do eval $line; done &
 #while read line; do eval $line; done >/dev/null 2>&1 &
