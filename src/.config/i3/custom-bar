@@ -48,6 +48,7 @@ clock(){
 }
 
 ## Bar for compositor to turn into empty space around main bar.
+# echo | lemonbar -n bar_invisible -g "1x40" -B "#D9E5F1" -p &
 echo | lemonbar -n bar_invisible -g "1x40" -p &
 
 ## Main bar.

@@ -1,17 +1,17 @@
-! urxvt stuff
+!! urxvt stuff
 URxvt.scrollBar: false
 !URxvt.font: -gohu-gohufont-medium-r-normal--14-100-100-100-c-80-iso10646-1, -gohu-gohufont-bold-r-normal--14-100-100-100-c-80-iso10646-1
 
 URxvt.font: -windows-dina-medium-r-*-*-10-*-*-*-*-*-*-*
 
-! URxvt.keysym.Control-c:
+!! URxvt.keysym.Control-c:
 
-! Allows unclutter to work with URxvt
-!URxvt*pointerBlank: true
+!! Allows unclutter to work with URxvt
+! URxvt*pointerBlank: true
 
-! VTE-like mouse wheel scrolling
-!URxvt.secondaryScreen: true
-!URxvt.secondaryScroll: false
+!! VTE-like mouse wheel scrolling
+! URxvt.secondaryScreen: true
+! URxvt.secondaryScroll: false
 
 ! vim: set filetype=xdefaults :
 *foreground: #D7D0C7
