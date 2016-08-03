@@ -1,2 +1,2 @@
--o "~/Videos/youtube/%(title)s - %(id)s.%(id)s"
+# -o "~/Videos/youtube/%(title)s - %(id)s.%(id)s"
 -f mp4
