@@ -46,6 +46,8 @@ if ! shopt -oq posix; then
 fi
 
 # export TERM=xterm-256color
+export QUOTING_STYLE=literal
+
 
 ## Stop ranger from loading both the default and custom rc file.
 RANGER_LOAD_DEFAULT_RC=FALSE
@@ -65,3 +67,4 @@ alias remsync-anime="remsync rbon@nu.jercos.moe:/home/rbon/www/anime/ /home/robi
 alias tags-on="tagsistant ~/media"
 alias tags-off="fusermount -u ~/media"
 alias subl3="subl3 -n"
+nusync-misc() { rsync -avs "rbon@nu.jercos.moe:/home/rbon/www/misc/$@" .; }
