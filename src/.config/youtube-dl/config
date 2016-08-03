@@ -1,0 +1,2 @@
+-o "~/Videos/youtube/%(title)s - %(id)s.%(id)s"
+-f bestvideo
