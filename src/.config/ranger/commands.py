@@ -12,6 +12,7 @@ from ranger.api.commands import *
 
 # You can import any python module as needed.
 import os
+from subprocess import Popen, PIPE, STDOUT
 
 # Any class that is a subclass of "Command" will be integrated into ranger as a
 # command.  Try typing ":my_edit<ENTER>" in ranger!
@@ -57,15 +58,53 @@ class my_edit(Command):
         # content of the current directory.
         return self._tab_directory_content()
 
-class tmsu_add_tag(Command):
-    """:tmsu_add_tag <filename>
 
-    Add a tmsu tag.
+class tmsu_tag(Command):
+    """:tmsu_tag <tags>
+
+    Add one or more tmsu tags to the current selections.
     """
     def execute(self):
         files = ""
         for file in self.fm.thistab.get_selection():
-            files += file.path + " "
-        # self.fm.notify(files)
+            files += "'" + file.path + "' "
         self.fm.execute_console("shell tmsu tag --tags='" + self.rest(1) + "' " + files)
         return
+
+
+class tmsu_untag(Command):
+    """:tmsu_untag <tags>
+
+    Remove one or more tags from the current selection.
+    """
+    def execute(self):
+        files = ""
+        for file in self.fm.thistab.get_selection():
+            files += "'" + file.path + "' "
+        self.fm.execute_console("shell tmsu untag --tags='" + self.rest(1) + "' " + files)
+        return
+
+
+class tmsu_list_tags(Command):
+    """:tmsu_list_tags
+
+    List tags for the current file.
+    """
+    def execute(self):
+        cmd = "tmsu tags '" + self.fm.thisfile.path + "'"
+        p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+        output = p.stdout.read().decode("utf-8").split(': ', 1)
+
+        if len(output) == 1:
+            self.fm.notify("File has no tags.")
+        else:
+            self.fm.notify("Tags: " + output[1])
+        return
+
+
+
+
+# class tmsu_imply_tags(Command):
+#     """:tmsu_imply_tags
+
+#     
