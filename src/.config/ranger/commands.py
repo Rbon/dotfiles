@@ -102,9 +102,25 @@ class tmsu_list_tags(Command):
         return
 
 
+class tmsu_imply(Command):
+    """:tmsu_imply <tag1> <tag2>
+
+    Create a tag implication such that any file tagged <tag1> will be
+    implicitly tagged <tag2>.
+    """
+    def execute(self):
+        tag1 = self.arg(1)
+        tag2 = self.arg(2)
+        self.fm.execute_console("shell tmsu imply %s %s" % (tag1, tag2))
+        return
 
 
-# class tmsu_imply_tags(Command):
-#     """:tmsu_imply_tags
+class tmsu_merge(Command):
+    """:tmsu_merge <tag> [<tag>...] <dest>
 
-#     
+    Merges <tags>(s) into tag <dest> resulting in a single tag of name <dest>.
+
+    """
+    def execute(self):
+        self.fm.execute_console("shell tmsu merge %s" % (self.rest(1)))
+        return

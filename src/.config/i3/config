@@ -9,7 +9,7 @@ set $workspace6  "6"
 set $workspace7  "7"
 set $workspace8  "8"
 set $workspace9  "9"
-set $workspace10 "10-music"
+set $workspace10 "10"
 
 ## Keybinds
 bindsym $mod+Return          exec urxvt -cd "`xcwd`"
@@ -80,6 +80,7 @@ bindsym Print      exec "scrot '%F_%T.png' -e 'mv $f ~/Pictures/screenshots/'"
 ## programs set to open floating
 for_window [class="feh"] floating enable
 for_window [class="mpv"] floating enable
+for_window [class="Viewnior"] floating enable
 # for_window [class="UXTerm"] floating enable
 # for_window [class="Gnome-terminal"] floating enable
 
@@ -135,7 +136,7 @@ hide_edge_borders both
 floating_modifier $mod
 
 ## Execs
-exec_always --no-startup-id "feh --bg-fill /home/robin/Pictures/snowy-mountains.jpg"
+exec_always --no-startup-id "feh --bg-fill /home/robin/Pictures/wallpapers/snowy-mountains.jpg"
 exec --no-startup-id compton
-exec firefox
+# exec firefox
 exec --no-startup-id ~/.config/i3/custom-bar
