@@ -52,6 +52,8 @@ export QUOTING_STYLE=literal
 ## Stop ranger from loading both the default and custom rc file.
 RANGER_LOAD_DEFAULT_RC=FALSE
 
+export VISUAL="vim"
+
 ## aliases and functions
 alias ls="ls -AX --color=auto --group-directories-first"
 cl() { cd "$@" && ls; }
@@ -68,4 +70,8 @@ alias tags-on="tagsistant ~/media"
 alias tags-off="fusermount -u ~/media"
 alias subl3="subl3 -n"
 nusync-misc() { rsync -avs "rbon@nu.jercos.moe:/home/rbon/www/misc/$@" .; }
-vbr-encode() { ffmpeg -i "$1" -codec:a libmp3lame -qscale:a 0 "$2"; }
+alias fix-pacman="sudo pacman -Syy"
+vbr-encode() { 
+for a in ./*.flac; do
+  ffmpeg -i "$a" -qscale:a 0 "${a[@]/%flac/mp3}"
+done; }
