@@ -68,6 +68,8 @@ alias fix-pacman="sudo pacman -Syy"
 cl() { cd "$@" && ls; }
 nusync-misc() { rsync -avs "rbon@nu.jercos.moe:/home/rbon/www/misc/$@" .; }
 vbr-encode() { 
-for a in ./*.flac; do
-  ffmpeg -i "$a" -qscale:a 0 "${a[@]/%flac/mp3}"
+for ext in .flac .ape; do
+  for f in *$ext; do
+    ffmpeg -i "$f" -qscale:a 0 "$(basename "$f" "$ext").mp3"
+  done
 done; }
