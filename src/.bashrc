@@ -73,3 +73,9 @@ for ext in .flac .ape; do
     ffmpeg -i "$f" -qscale:a 0 "$(basename "$f" "$ext").mp3"
   done
 done; }
+
+## include .bash_private if it exists
+if [[ -f $HOME/.bash_private ]]; then
+    . $HOME/.bash_private
+fi
+  
