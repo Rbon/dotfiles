@@ -63,6 +63,7 @@ alias remove="sudo pacman -R"
 alias grep='grep --color=auto'
 alias subl3="subl3 -n"
 alias fix-pacman="sudo pacman -Syy"
+alias starwars="telnet towel.blinkenlights.nl"
 
 ## functions
 cl() { cd "$@" && ls; }
