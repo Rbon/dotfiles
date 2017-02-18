@@ -1,3 +1,5 @@
+[[ -f /etc/profile.d/autojump.bash ]] && . /etc/profile.d/autojump.bash
+
 ## If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -67,13 +69,21 @@ alias starwars="telnet towel.blinkenlights.nl"
 
 ## functions
 cl() { cd "$@" && ls; }
+
 nusync-misc() { rsync -avs "rbon@nu.jercos.moe:/home/rbon/www/misc/$@" .; }
+
 vbr-encode() { 
 for ext in .flac .ape; do
   for f in *$ext; do
     ffmpeg -i "$f" -qscale:a 0 "$(basename "$f" "$ext").mp3"
   done
 done; }
+
+dotvim() {
+  vim ~/Documents/source/dotfiles/src/$1 \
+  && cp ~/Documents/source/dotfiles/src/$1 ~/$1;
+}
+
 
 ## include .bash_private if it exists
 if [[ -f $HOME/.bash_private ]]; then
