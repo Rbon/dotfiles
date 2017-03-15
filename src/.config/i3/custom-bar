@@ -3,16 +3,16 @@
 resources="xrdb -query"
 
 ## Fetch the Colors
-background=$(${resources} | grep -i background | tail -c 8)
-foreground=$(${resources} | grep -i foreground | tail -c 8)
-black=$(${resources}      | grep -i color8     | tail -c 8)
-red=$(${resources}        | grep -i color9     | tail -c 8)
-green=$(${resources}      | grep -i color10    | tail -c 8)
-yellow=$(${resources}     | grep -i color11    | tail -c 8)
-blue=$(${resources}       | grep -i color12    | tail -c 8)
-magenta=$(${resources}    | grep -i color13    | tail -c 8)
-cyan=$(${resources}       | grep -i color14    | tail -c 8)
-white=$(${resources}      | grep -i color15    | tail -c 8)
+background=$(${resources} | grep -i *background | tail -c 8)
+foreground=$(${resources} | grep -i *foreground | tail -c 8)
+black=$(${resources}      | grep -i *color8     | tail -c 8)
+red=$(${resources}        | grep -i *color9     | tail -c 8)
+green=$(${resources}      | grep -i *color10    | tail -c 8)
+yellow=$(${resources}     | grep -i *color11    | tail -c 8)
+blue=$(${resources}       | grep -i *color12    | tail -c 8)
+magenta=$(${resources}    | grep -i *color13    | tail -c 8)
+cyan=$(${resources}       | grep -i *color14    | tail -c 8)
+white=$(${resources}      | grep -i *color15    | tail -c 8)
 
 ## Fonts
 font1="-windows-dina-medium-r-*-*-10-*-*-*-*-*-*-*"

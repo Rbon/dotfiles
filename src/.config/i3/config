@@ -35,9 +35,9 @@ bindsym $mod+Shift+Right     move right
 bindsym $mod+h               split h
 bindsym $mod+v               split v
 bindsym F10                  fullscreen
-bindsym $mod+s               layout stacking
-bindsym $mod+t               layout tabbed
-bindsym $mod+e               layout toggle split
+# bindsym $mod+s               layout stacking
+# bindsym $mod+t               layout tabbed
+bindsym $mod+s               layout toggle split
 bindsym $mod+f               floating toggle
 bindsym $mod+Shift+f         focus mode_toggle
 bindsym $mod+a               focus parent
@@ -69,7 +69,8 @@ bindsym $mod+Shift+r         restart
 bindsym $mod+Tab             workspace back_and_forth
 bindsym $mod+Shift+q         exec "i3-msg exit"
 bindsym $mod+l               exec plock
-bindsym Print                exec "scrot '%F_%T.png' -e 'mv $f ~/Pictures/screenshots/'"
+# bindsym Print                exec "scrot '%F_%T.png' -e 'mv $f ~/Pictures/screenshots/'"
+bindsym Print                exec "spectacle"
 
 
 ## Assign applications to workspaces
@@ -84,7 +85,7 @@ for_window [class="Viewnior"]  floating enable
 for_window [class="retroarch"] floating enable
 
 ## i3-gaps stuff
-for_window [class="^.*"] border pixel 4
+for_window [class="^.*"] border pixel 0
 gaps inner 16
 # smart_gaps on
 smart_borders on
@@ -139,3 +140,4 @@ exec_always --no-startup-id "feh --bg-fill /home/robin/Pictures/wallpapers/snowy
 exec --no-startup-id compton
 # exec firefox
 exec --no-startup-id ~/.config/i3/custom-bar
+exec --no-startup-id xbanish
