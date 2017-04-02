@@ -47,15 +47,40 @@ filetype indent on
 set number
 set showcmd
 set cursorline
-set foldenable
-set foldlevelstart=10
-set foldnestmax=10
+
+"" folding stuff
+"set foldenable
+"set foldlevelstart=10
+"set foldnestmax=10
+set foldmethod=manual
 nnoremap <space> za
+augroup AutoSaveFolds
+  autocmd!
+  autocmd BufWinLeave * mkview
+  autocmd BufWinEnter * silent loadview
+augroup END
+" autocmd InsertEnter * let w:last_fdm=&foldmethod | setlocal foldmethod=manual
+" autocmd InsertLeave * let &l:foldmethod=w:last_fdm
+
+"" tab completion
+function! Tab_Or_Complete()
+  if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+    return "\<C-N>"
+  else
+    return "\<Tab>"
+  endif
+endfunction
+:inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
+:set dictionary="/usr/dict/words"
+
+"" misc
 set colorcolumn=81
 highlight ColorColumn ctermbg=0 guibg=lightgrey
-
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 runtime macros/matchit.vim
+set clipboard+=unnamed
+" set wildmode=longest,list,full
+" set wildmenu
 
 "" Global stuff
 let g:AutoPairs={'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`','|':'|'}
@@ -65,6 +90,12 @@ nmap <C-s>     :w<CR>    " save
 nmap <C-w>     :q<CR>    " quit
 nmap <C-z>     :undo<CR> " undo
 nmap <C-z>     :redo<CR> " redo
-nmap <C-e>     <leader>cc
 nmap <leader>u :GundoToggle<CR>
-nmap <C-b>      <Plug>EraseBadWhiteSpace
+nmap <C-b>     <Plug>EraseBadWhiteSpace
+nmap <Home>    ^
+
+"" Comments
+let NERDSpaceDelims=1
+map  <C-e> <leader>c<space>
+imap <C-e> <Esc><leader>c<space>i
+vmap <C-e> <leader>c<space>

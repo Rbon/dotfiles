@@ -12,66 +12,67 @@ set $workspace9  9
 set $workspace10 10
 
 ## Keybinds
-bindsym $mod+Return          exec urxvt -cd "`xcwd`"
-bindsym $mod+Shift+Return    exec urxvt
-bindsym $mod+d               exec dmenu_run -b
-bindsym $mod+w               kill
-bindsym $mod+j               focus left
-bindsym $mod+Left            focus left
-bindsym $mod+Down            focus down
-bindsym $mod+k               focus down
-# bindsym $mod+l               focus up
-bindsym $mod+Up              focus up
-bindsym $mod+semicolon       focus right
-bindsym $mod+Right           focus right
-bindsym $mod+Shift+j         move left
-bindsym $mod+Shift+Left      move left
-bindsym $mod+Shift+k         move down
-bindsym $mod+Shift+Down      move down
-bindsym $mod+Shift+l         move up
-bindsym $mod+Shift+Up        move up
-bindsym $mod+Shift+semicolon move right
-bindsym $mod+Shift+Right     move right
-bindsym $mod+h               split h
-bindsym $mod+v               split v
-bindsym F10                  fullscreen
-# bindsym $mod+s               layout stacking
-# bindsym $mod+t               layout tabbed
-bindsym $mod+s               layout toggle split
-bindsym $mod+f               floating toggle
-bindsym $mod+Shift+f         focus mode_toggle
-bindsym $mod+a               focus parent
-# bindsym $mod+d               focus child
-bindsym $mod+1               workspace $workspace1
-bindsym $mod+2               workspace $workspace2
-bindsym $mod+3               workspace $workspace3
-bindsym $mod+4               workspace $workspace4
-bindsym $mod+5               workspace $workspace5
-bindsym $mod+6               workspace $workspace6
-bindsym $mod+7               workspace $workspace7
-bindsym $mod+8               workspace $workspace8
-bindsym $mod+9               workspace $workspace9
-bindsym $mod+0               workspace $workspace10
-bindsym $mod+Shift+1         exec "i3-msg move container to workspace $workspace1 && i3-msg workspace $workspace1"
-bindsym $mod+Shift+2         exec "i3-msg move container to workspace $workspace2 && i3-msg workspace $workspace2"
-bindsym $mod+Shift+3         exec "i3-msg move container to workspace $workspace3 && i3-msg workspace $workspace3"
-bindsym $mod+Shift+4         exec "i3-msg move container to workspace $workspace4 && i3-msg workspace $workspace4"
-bindsym $mod+Shift+5         exec "i3-msg move container to workspace $workspace5 && i3-msg workspace $workspace5"
-bindsym $mod+Shift+6         exec "i3-msg move container to workspace $workspace6 && i3-msg workspace $workspace6"
-bindsym $mod+Shift+7         exec "i3-msg move container to workspace $workspace7 && i3-msg workspace $workspace7"
-bindsym $mod+Shift+8         exec "i3-msg move container to workspace $workspace8 && i3-msg workspace $workspace8"
-bindsym $mod+Shift+9         exec "i3-msg move container to workspace $workspace9 && i3-msg workspace $workspace9"
-bindsym $mod+Shift+0         exec "i3-msg move container to workspace $workspace10 && i3-msg workspace $workspace10"
-bindsym $mod+Shift+c         reload
-bindsym $mod+Shift+r         restart
-# bindsym button4              nop
-# bindsym button5              nop
-bindsym $mod+Tab             workspace back_and_forth
-bindsym $mod+Shift+q         exec "i3-msg exit"
-bindsym $mod+l               exec plock
-# bindsym Print                exec "scrot '%F_%T.png' -e 'mv $f ~/Pictures/screenshots/'"
-bindsym Print                exec "spectacle"
-
+bindsym $mod+Return           exec urxvt -cd "`xcwd`"
+bindsym $mod+plus             split v; exec urxvt -cd "`xcwd`"
+bindsym $mod+Shift+apostrophe split h; exec urxvt -cd "`xcwd`"
+bindsym $mod+Shift+Return     exec urxvt
+bindsym $mod+d                exec dmenu_run -b
+bindsym $mod+w                kill
+bindsym $mod+j                focus left
+bindsym $mod+Left             focus left
+bindsym $mod+Down             focus down
+bindsym $mod+k                focus down
+bindsym $mod+l                focus up
+bindsym $mod+Up               focus up
+bindsym $mod+semicolon        focus right
+bindsym $mod+Right            focus right
+bindsym $mod+Shift+j          move left
+bindsym $mod+Shift+Left       move left
+bindsym $mod+Shift+k          move down
+bindsym $mod+Shift+Down       move down
+bindsym $mod+Shift+l          move up
+bindsym $mod+Shift+Up         move up
+bindsym $mod+Shift+semicolon  move right
+bindsym $mod+Shift+Right      move right
+bindsym $mod+h                split h
+bindsym $mod+v                split v
+bindsym F10                   fullscreen
+# bindsym $mod+s                layout stacking
+# bindsym $mod+t                layout tabbed
+bindsym $mod+s                layout toggle split
+bindsym $mod+f                floating toggle
+bindsym $mod+Shift+f          focus mode_toggle
+bindsym $mod+a                focus parent
+# bindsym $mod+d                focus child
+bindsym $mod+1                workspace $workspace1
+bindsym $mod+2                workspace $workspace2
+bindsym $mod+3                workspace $workspace3
+bindsym $mod+4                workspace $workspace4
+bindsym $mod+5                workspace $workspace5
+bindsym $mod+6                workspace $workspace6
+bindsym $mod+7                workspace $workspace7
+bindsym $mod+8                workspace $workspace8
+bindsym $mod+9                workspace $workspace9
+bindsym $mod+0                workspace $workspace10
+bindsym $mod+Shift+1          exec "i3-msg move container to workspace $workspace1 && i3-msg workspace $workspace1"
+bindsym $mod+Shift+2          exec "i3-msg move container to workspace $workspace2 && i3-msg workspace $workspace2"
+bindsym $mod+Shift+3          exec "i3-msg move container to workspace $workspace3 && i3-msg workspace $workspace3"
+bindsym $mod+Shift+4          exec "i3-msg move container to workspace $workspace4 && i3-msg workspace $workspace4"
+bindsym $mod+Shift+5          exec "i3-msg move container to workspace $workspace5 && i3-msg workspace $workspace5"
+bindsym $mod+Shift+6          exec "i3-msg move container to workspace $workspace6 && i3-msg workspace $workspace6"
+bindsym $mod+Shift+7          exec "i3-msg move container to workspace $workspace7 && i3-msg workspace $workspace7"
+bindsym $mod+Shift+8          exec "i3-msg move container to workspace $workspace8 && i3-msg workspace $workspace8"
+bindsym $mod+Shift+9          exec "i3-msg move container to workspace $workspace9 && i3-msg workspace $workspace9"
+bindsym $mod+Shift+0          exec "i3-msg move container to workspace $workspace10 && i3-msg workspace $workspace10"
+bindsym $mod+Shift+c          reload
+bindsym $mod+Shift+r          restart
+# bindsym button4               nop
+# bindsym button5               nop
+bindsym $mod+Tab              workspace back_and_forth
+bindsym $mod+Shift+q          exec "i3-msg exit"
+bindsym $mod+Shift+l                exec plock
+# bindsym Print                 exec "scrot '%F_%T.png' -e 'mv $f ~/Pictures/screenshots/'"
+bindsym Print                 exec "spectacle"
 
 ## Assign applications to workspaces
 # assign [class="Firefox"] $workspace1
@@ -100,7 +101,7 @@ mode "resize" {
         # Pressing down will grow the window’s height.
         bindsym j resize shrink width 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt 
+        bindsym l resize shrink height 10 px or 10 ppt
         bindsym semicolon resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
