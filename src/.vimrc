@@ -94,6 +94,9 @@ nmap <leader>u :GundoToggle<CR>
 nmap <C-b>     <Plug>EraseBadWhiteSpace
 nmap <Home>    ^
 
+"" I wish there was a better way to do this.
+imap <Home>    <Esc>^i
+
 "" Comments
 let NERDSpaceDelims=1
 map  <C-e> <leader>c<space>

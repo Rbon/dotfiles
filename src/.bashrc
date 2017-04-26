@@ -61,6 +61,7 @@ alias ls="ls -AX --color=auto --group-directories-first"
 # alias tmux="tmux source-file ~/.config/tmux.conf"
 alias install="sudo pacman -S"
 alias remove="sudo pacman -R"
+alias pac-remove-orphans="sudo pacman -Rns $(pacman -Qtdq)"
 # alias install="sudo apt-get install"
 alias grep='grep --color=auto'
 alias subl3="subl3 -n"
@@ -72,7 +73,7 @@ cl() { cd "$@" && ls; }
 
 nusync-misc() { rsync -avs "rbon@nu.jercos.moe:/home/rbon/www/misc/$@" .; }
 
-vbr-encode() { 
+vbr-encode() {
 for ext in .flac .ape; do
   for f in *$ext; do
     ffmpeg -i "$f" -qscale:a 0 "$(basename "$f" "$ext").mp3"
@@ -91,3 +92,5 @@ if [[ -f $HOME/.bash_private ]]; then
 fi
 
 stty -ixon # Disable XON/XOFF
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
