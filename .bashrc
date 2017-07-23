@@ -6,6 +6,8 @@ case $- in
       *) return;;
 esac
 
+set -o vi
+
 ## don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 
@@ -67,6 +69,8 @@ alias grep='grep --color=auto'
 alias subl3="subl3 -n"
 alias fix-pacman="sudo pacman -Syy"
 alias starwars="telnet towel.blinkenlights.nl"
+alias soundcloud-dl="scdl"
+alias spotify="spotify --ap=194.132.196.162" ## fixes log-in problem
 
 ## functions
 cl() { cd "$@" && ls; }
@@ -85,6 +89,10 @@ dotvim() {
   && cp ~/Documents/source/dotfiles/src/$1 ~/$1;
 }
 
+mkcd() {
+  mkdir $1
+  cd $1
+}
 
 ## include .bash_private if it exists
 if [[ -f $HOME/.bash_private ]]; then

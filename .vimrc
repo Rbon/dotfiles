@@ -1,4 +1,4 @@
-"" Vundle stuffdsdss
+"" Vundle stuff
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -18,6 +18,9 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-endwise'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'bitc/vim-bad-whitespace'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-orgmode'
+Plugin 'speeddating.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -54,11 +57,11 @@ set cursorline
 "set foldnestmax=10
 set foldmethod=manual
 nnoremap <space> za
-augroup AutoSaveFolds
-  autocmd!
-  autocmd BufWinLeave * mkview
-  autocmd BufWinEnter * silent loadview
-augroup END
+" augroup AutoSaveFolds
+  " autocmd!
+  " autocmd BufWinLeave * mkview
+  " autocmd BufWinEnter * silent loadview
+" augroup END
 " autocmd InsertEnter * let w:last_fdm=&foldmethod | setlocal foldmethod=manual
 " autocmd InsertLeave * let &l:foldmethod=w:last_fdm
 
@@ -82,23 +85,22 @@ set clipboard+=unnamed
 " set wildmode=longest,list,full
 " set wildmenu
 
+filetype plugin indent on
+
 "" Global stuff
 let g:AutoPairs={'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`','|':'|'}
 
 "" Keybinds
 nmap <C-s>     :w<CR>    " save
-nmap <C-w>     :q<CR>    " quit
+" nmap <C-w>     :q<CR>    " quit
 nmap <C-z>     :undo<CR> " undo
 nmap <C-z>     :redo<CR> " redo
 nmap <leader>u :GundoToggle<CR>
 nmap <C-b>     <Plug>EraseBadWhiteSpace
 nmap <Home>    ^
 
-"" I wish there was a better way to do this.
-imap <Home>    <Esc>^i
-
 "" Comments
 let NERDSpaceDelims=1
-map  <C-e> <leader>c<space>
-imap <C-e> <Esc><leader>c<space>i
-vmap <C-e> <leader>c<space>
+" map  <C-e> <leader>c<space>
+" imap <C-e> <Esc><leader>c<space>i
+" vmap <C-e> <leader>c<space>
