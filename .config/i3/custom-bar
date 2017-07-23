@@ -1,6 +1,7 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 
 resources="xrdb -query"
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 ## Fetch the Colors
 background=$(${resources} | grep -i *background | tail -c 8)
@@ -30,17 +31,7 @@ dimentions="${bar_w}x${bar_h}+${bar_x}+${bar_y}"
 
 ## Workspace info.
 workspaces(){
-  output=""
-  desktop="$(i3-msg -t get_workspaces \
-    | jq '.[].name' \
-    | sed -e 's/^"//' -e 's/"$//')"
-  
-  for line in  $desktop; do
-    output="$output %{A:i3-msg workspace $line:} \
-    $(echo $line | sed s/^[0-9*]-//)%{A}"
-  done
-  
-  echo $output
+  ruby ${dir}/workspaces.rb -w $(i3-msg -t get_workspaces)
 }
 
 clock(){
@@ -53,7 +44,7 @@ echo | lemonbar -n bar_invisible -g "1x40" -p &
 
 ## Main bar.
 while :; do
-  echo " $(workspaces) %{r} $(clock) "
+  echo "%{c}$(workspaces)%{r}$(clock) "
   sleep 1.0
 done \
   | lemonbar -d \

@@ -11,3 +11,5 @@ autocutsel -selection PRIMARY -fork &
 xset -dpms &
 xset s noblank &
 xset s off &
+
+xbindkeys

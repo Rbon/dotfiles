@@ -1,0 +1,15 @@
+# Previous Track
+"cmus-remote --prev"
+  XF86AudioPrev
+
+# Toggle Pause
+"cmus-remote --pause"
+  XF86AudioPlay
+
+# Next Track
+"cmus-remote --next"
+  XF86AudioNext
+
+# Stop Media
+"cmus-remote --stop"
+  XF86AudioStop
