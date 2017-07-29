@@ -1,0 +1,48 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+bindkey -v
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/robin/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+# PROMPT="%n@%m \$ "
+
+## VI Mode stuff ##
+precmd() { RPROMPT="" }
+function zle-line-init zle-keymap-select {
+  VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]% %{$reset_color%}"
+  RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
+  zle reset-prompt
+}
+
+## remember mode through returns
+accept-line() { prev_mode=$KEYMAP; zle .accept-line }
+zle-line-init() { zle -K ${prev_mode:-viins} }
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+zle -N accept-line
+## End of VI Mode stuff ##
+
+## Prompt stuff
+autoload -Uz promptinit
+promptinit
+
+export PATH="$PATH:$HOME/.scripts"
+export KEYTIMEOUT=1 # decrese lag when switching to normal mode
+export TERM=rxvt-unicode-256color
+bindkey -v '^?' backward-delete-char
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+## Powerline stuff
+#if [[ -r /usr/lib/python3.6/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
+#    source /usr/lib/python3.6/site-packages/powerline/bindings/zsh/powerline.zsh
+#fi

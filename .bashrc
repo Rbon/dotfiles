@@ -7,6 +7,7 @@ case $- in
 esac
 
 set -o vi
+XDG_CONFIG_HOME=$HOME/.config
 
 ## don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
