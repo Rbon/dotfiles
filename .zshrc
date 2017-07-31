@@ -33,6 +33,7 @@ zle -N accept-line
 ## Prompt stuff
 autoload -Uz promptinit
 promptinit
+prompt redhat
 
 export PATH="$PATH:$HOME/.scripts"
 export KEYTIMEOUT=1 # decrese lag when switching to normal mode
