@@ -1,0 +1,13 @@
+#! /usr/bin/env bash
+
+config="/home/rbon/.config/flexget/config.yml"
+
+task="  $1:\n    rss:\n      url: $2\n    template: torrent"
+
+if [[ $1 && $2 ]]; then
+  ssh nu "echo -e '${task}' >> ${config}; flexget -c ${config} execute" &&
+  echo -e "Added \"$1\" to the RSS list." 
+else
+  echo "Not enough arguments." 1>&2
+  exit 1
+fi

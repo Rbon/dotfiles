@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+queue=$(realpath $1)
+
+if [[ -d $2 ]]; then
+  cd $2
+fi
+
+trap "exit" INT
+while read line || [[ -n $line ]]; do
+  youtube-dl $line
+done < $queue

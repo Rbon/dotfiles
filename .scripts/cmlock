@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+clear && cmatrix -bs -C cyan -u 10; vlock

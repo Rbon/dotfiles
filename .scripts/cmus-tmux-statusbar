@@ -1,0 +1,30 @@
+#!/bin/bash
+cmus_status=$(cmus-remote -Q)
+play_status=$(echo "$cmus_status" | sed -n 's/status //p')
+artist=$(echo "$cmus_status" | sed -n 's/tag artist //p')
+album=$(echo "$cmus_status" | sed -n 's/tag album //p')
+title=$(echo "$cmus_status" | sed -n 's/tag title //p')
+file_path=$(echo "$cmus_status" | sed -n 's/file //p')
+file_name=$(basename "$file_path")
+
+if [ -n "$artist" ]; then
+  first="$artist - "
+elif [ -n "$album" ]; then
+  first="$album - "
+else
+  first=""
+fi
+
+if [ -n "$title" ]; then
+  second=$title
+else
+  second=$file_name
+fi
+
+if [ $play_status = "paused" ]; then
+  pause_state="(||)"
+else
+        pause_state="(|>)"
+fi
+
+echo "♪ ${first}${second} ${pause_state}  |  "

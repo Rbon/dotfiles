@@ -1,0 +1,3 @@
+#! /usr/bin/env bash
+
+ffmpeg -i $1 -codec:v libvpx -quality best -cpu-used 0 -qscale:v 1 $2

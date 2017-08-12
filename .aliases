@@ -1,0 +1,12 @@
+alias ls="ls -AX --color=auto --group-directories-first"
+# alias tmux="tmux source-file ~/.config/tmux.conf"
+alias install="sudo pacman -S"
+alias remove="sudo pacman -R"
+alias pac-remove-orphans="sudo pacman -Rns $(pacman -Qtdq)"
+# alias install="sudo apt-get install"
+alias grep='grep --color=auto'
+alias subl3="subl3 -n"
+alias fix-pacman="sudo pacman -Syy"
+alias starwars="telnet towel.blinkenlights.nl"
+alias soundcloud-dl="scdl"
+alias spotify="spotify --ap=194.132.196.162" ## fixes log-in problem

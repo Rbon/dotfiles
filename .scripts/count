@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+## TODO:
+## Support for options in any position.
+## Ability to list multiple dirs and/or count files from wildcards.
+
+show_hidden_files=false
+exclude_dirs=false
+bad_opt=false
+
+## Parse the options.
+while getopts ":ad" opt; do
+  case $opt in
+    a)
+      show_hidden_files=true
+      ;;
+    d)
+      exclude_dirs=true
+      ;;
+    \?)
+      echo "Invalid option: -${OPTARG}" >&2
+      bad_opt=true
+      ;;
+  esac
+done
+if ( $bad_opt ); then
+  exit 1
+fi
+
+## Get the directory to search.
+shift "$((OPTIND-1))"
+if [[ $1 ]]; then
+  if [[ -d $1 ]]; then
+    location=$1
+  else
+    echo "count: cannot access '$1': No such directory" >&2
+    exit 1
+  fi
+else
+  location=$(pwd)
+fi
+
+## Form Voltron.
+line="ls -p"
+if ( $show_hidden_files ); then
+  line="${line} -A"
+fi
+line="${line} ${location}"
+if ( $exclude_dirs ); then
+  line="${line} | grep -v '/$'"
+fi
+line="${line} | wc -l"
+eval $line

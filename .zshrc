@@ -10,7 +10,7 @@ zstyle :compinstall filename '/home/robin/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
-
+stty -ixon
 # PROMPT="%n@%m \$ "
 
 ## VI Mode stuff ##
@@ -37,8 +37,11 @@ prompt redhat
 
 export PATH="$PATH:$HOME/.scripts"
 export KEYTIMEOUT=1 # decrese lag when switching to normal mode
-export TERM=rxvt-unicode-256color
+# export TERM=rxvt-unicode-256color
 bindkey -v '^?' backward-delete-char
+
+[ -f ~/.aliases  ] && source ~/.aliases
+[ -f ~/.privaterc  ] && source ~/.privaterc
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"

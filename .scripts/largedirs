@@ -1,0 +1,79 @@
+#! /usr/bin/env python2
+
+import argparse
+import subprocess
+
+
+def Listify(items, indent=""):
+    output = ""
+    for item in items:
+        item[0] = FormatSize(item[0])
+        output = output + "{0}{1} {2}\n".format(indent, item[0], item[1])
+        if item[2]:
+            output = output + Listify(item[2], indent + "    ")
+    return output
+
+
+def RecurSort(items):
+    items.sort()
+    items.reverse()
+    for item in items:
+        if item[2]:
+            RecurSort(item[2])
+    return items
+
+
+def FormatSize(num):
+    for x in ['K','M','G','T']:
+        if num < 1024.0:
+            return "%3.1f%s" % (num, x)
+        num /= 1024.0
+
+
+parser = argparse.ArgumentParser(
+    description="Summarize disk usage of each file " \
+    "(the current directory by default), " \
+    "sorted by size, recursively for directories.")
+size_args = parser.add_mutually_exclusive_group()
+size_args.add_argument("-m", action="store_true",
+    help="only list dirs larger than 1M")
+size_args.add_argument("-g", action="store_true",
+    help="only list dirs larger than 1G")
+parser.add_argument("file", nargs="*",
+    help="file or directory to list")
+args = parser.parse_args()
+if args.g:
+    min_size = 1048576
+elif args.m:
+    min_size = 1024
+else:
+    min_size = 0
+process = ["du"]
+process.extend(args.file)
+du_output = subprocess.check_output(process)
+# Make the directories.
+dirs = []
+for line in du_output.splitlines():
+    line = line.split()
+    if int(line[0]) > min_size:
+        line = [line[0], " ".join(line[1:])]
+        line = [int(line[0]), line[1].rstrip("\n"), []]
+        dirs.append(line)
+if dirs:
+    # Nest the directories.
+    dirs.reverse()
+    previous_items = []
+    match = False
+    nest = []
+    for item in dirs:
+        match = False
+        for previous_item in previous_items:
+            if item[1].startswith(previous_item[1]):
+                previous_item[2].append(item)
+                match = True
+                break
+        previous_items.insert(0, item)
+        if not match:
+            nest.append(item)
+    # Format everything.
+    print Listify(RecurSort(nest))

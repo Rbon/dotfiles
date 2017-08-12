@@ -14,7 +14,7 @@ Plugin 'vim-ruby/vim-ruby'
 " Plugin 'vim-utils/vim-ruby-fold'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'sjl/gundo.vim'
-Plugin 'terryma/vim-multiple-cursors'
+" Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-endwise'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'bitc/vim-bad-whitespace'
@@ -41,22 +41,19 @@ filetype plugin indent on    " required
 
 syntax enable
 set background=dark
-colorscheme solarized
-set mouse=a
-set tabstop=2
-set softtabstop=2
-set expandtab
-filetype indent on
+colorscheme default
+" set mouse=a
 set number
 set showcmd
-set cursorline
+" set cursorline
+set tabstop=2 expandtab shiftwidth=2
 
 "" folding stuff
 "set foldenable
 "set foldlevelstart=10
 "set foldnestmax=10
 set foldmethod=manual
-nnoremap <space> za
+" nnoremap <space> za
 " augroup AutoSaveFolds
   " autocmd!
   " autocmd BufWinLeave * mkview
@@ -79,25 +76,25 @@ endfunction
 "" misc
 set colorcolumn=81
 highlight ColorColumn ctermbg=0 guibg=lightgrey
-autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
+" autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 runtime macros/matchit.vim
 set clipboard+=unnamed
 " set wildmode=longest,list,full
 " set wildmenu
-
-filetype plugin indent on
+set splitright
 
 "" Global stuff
 let g:AutoPairs={'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`','|':'|'}
 
 "" Keybinds
-nmap <C-s>     :w<CR>    " save
-" nmap <C-w>     :q<CR>    " quit
-nmap <C-z>     :undo<CR> " undo
-nmap <C-z>     :redo<CR> " redo
+nmap <C-s>     :w<CR>
+nmap <C-q>     :q<CR>
+nmap <C-z>     :undo<CR>
 nmap <leader>u :GundoToggle<CR>
 nmap <C-b>     <Plug>EraseBadWhiteSpace
-nmap <Home>    ^
+nmap <C-w>n    :vnew<space>
+nmap <C-n>     :vnew<space>
+nmap <leader>r :source ~/.vimrc<CR>
 
 "" Comments
 let NERDSpaceDelims=1
