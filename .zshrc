@@ -42,6 +42,7 @@ bindkey -v '^?' backward-delete-char
 
 [ -f ~/.aliases  ] && source ~/.aliases
 [ -f ~/.privaterc  ] && source ~/.privaterc
+[ -f  /etc/profile.d/autojump.zsh ] && source /etc/profile.d/autojump.zsh
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"

@@ -10,3 +10,4 @@ alias fix-pacman="sudo pacman -Syy"
 alias starwars="telnet towel.blinkenlights.nl"
 alias soundcloud-dl="scdl"
 alias spotify="spotify --ap=194.132.196.162" ## fixes log-in problem
+alias cmatrix="cmatrix -s -u 9 -C cyan"

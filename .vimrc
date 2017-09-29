@@ -1,4 +1,4 @@
-"" Vundle stuff
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -21,6 +21,9 @@ Plugin 'bitc/vim-bad-whitespace'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-orgmode'
 Plugin 'speeddating.vim'
+Plugin 'lrvick/Conque-Shell'
+Plugin 'gcmt/taboo.vim'
+Plugin 'altercation/vim-colors-solarized'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -41,7 +44,7 @@ filetype plugin indent on    " required
 
 syntax enable
 set background=dark
-colorscheme default
+colorscheme solarized
 " set mouse=a
 set number
 set showcmd
@@ -78,7 +81,7 @@ set colorcolumn=81
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 " autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 runtime macros/matchit.vim
-set clipboard+=unnamed
+set clipboard=unnamedplus
 " set wildmode=longest,list,full
 " set wildmenu
 set splitright
@@ -86,15 +89,34 @@ set splitright
 "" Global stuff
 let g:AutoPairs={'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`','|':'|'}
 
-"" Keybinds
-nmap <C-s>     :w<CR>
-nmap <C-q>     :q<CR>
-nmap <C-z>     :undo<CR>
-nmap <leader>u :GundoToggle<CR>
-nmap <C-b>     <Plug>EraseBadWhiteSpace
-nmap <C-w>n    :vnew<space>
-nmap <C-n>     :vnew<space>
-nmap <leader>r :source ~/.vimrc<CR>
+" Keybinds {
+nnoremap <C-s>      :w<CR>
+inoremap <C-s>      <Esc>:wa<CR>
+nnoremap <C-q>      :q<CR>
+nnoremap <C-z>      :undo<CR>
+nnoremap <leader>u  :GundoToggle<CR>
+nnoremap <C-b>      <Plug>EraseBadWhiteSpace
+nnoremap <C-w>"     :vnew<space>
+nnoremap <C-w>=     :new<space>
+nnoremap <leader>r  :source ~/.vimrc<CR>
+nnoremap <C-t>      <Nop>
+nnoremap <C-t>n     :tabedit<space>
+nnoremap <C-t>l     :tabnext<CR>
+nnoremap <C-t>h     :tabprevious<CR>
+nnoremap <C-t>r     :TabooRename<space>
+nnoremap <C-t><S-r> :TabooReset<CR>
+nnoremap <S-j>      <C-d>
+nnoremap <S-k>      <C-u>
+nnoremap <C-p>      o<Esc>p
+" nnoremap <C-o>n    :
+" nnoremap <space>   za
+
+let g:lasttab = 1
+nmap <C-t><Tab> :exe "tabn ".g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()
+" }
+
+" setg:taboo_tab_format:
 
 "" Comments
 let NERDSpaceDelims=1
