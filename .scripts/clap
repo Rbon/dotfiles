@@ -1,0 +1,151 @@
+#! /usr/bin/env ruby
+
+class Main
+  def initialize
+    @args = Arguments.new(args: ARGV)
+    @line = @args.input.downcase
+    @emojifier = Emojifier.new
+    @filler = Filler.new(align: @args.align, padding: @args.padding)
+    @joiner = Joiner.new
+  end
+
+  def run
+    output = []
+    puts @joiner.join(@filler.fill(@emojifier.emojify(@line)))
+  end
+end
+
+class Joiner
+  def join(grid)
+    output = []
+    grid.each do |row|
+      output << row.join(" ")
+    end
+    output.join("\n")
+  end
+end
+
+class Emojifier
+  def change(word)
+    word.chars.map { |char| ":regional_indicator_#{char}:" }
+  end
+
+  def emojify(line)
+    line.split.map { |word| change(word) }
+  end
+end
+
+class Filler
+  def initialize(opts)
+    @padding = opts[:padding]
+    @align = opts[:align].new(padding: @padding)
+  end
+
+  def fill(grid)
+    @align.fill(grid)
+  end
+end
+
+class MidAlign
+  def initialize(opts = {})
+    @ruler = (opts[:ruler] || Ruler).new
+    @padding = opts[:padding] || ":clap:"
+  end
+
+  def fill(grid)
+    output = []
+    grid.each do |row|
+      output << row.zip(
+        Array.new(row.length - 1) { @padding }
+      ).flatten.compact
+    end
+    size = @ruler.measure(output)
+    output2 = []
+    output.each do |row|
+      line = []
+      difference = [(size[:width] - row.length) / 2, 0].max
+      buffer = Array.new(difference) { @padding }
+      line << [buffer, row, buffer]
+      output2 << line.flatten
+    end
+    output2
+  end
+end
+
+class LeftAlign
+  def initialize(opts = {})
+    @ruler = (opts[:ruler] || Ruler).new
+    @padding = opts[:padding] || ""
+  end
+
+  def fill(grid)
+    output = []
+    size = @ruler.measure(grid)
+    grid.each do |row|
+      difference = size[:width] - row.length
+      buffer = Array.new(difference) { @padding }
+      output << [row, buffer].flatten
+    end
+    output
+  end
+end
+
+class RightAlign
+  def initialize(opts = {})
+    @align = opts[:align]
+    @ruler = (opts[:ruler] || Ruler).new
+    @padding = opts[:padding] || ":clap:"
+  end
+
+  def fill(grid)
+    output = []
+    size = @ruler.measure(grid)
+    grid.each do |row|
+      difference = size[:width] - row.length
+      buffer = Array.new(difference) { @padding }
+      output << [buffer, row].flatten
+    end
+    output
+  end
+end
+
+class Ruler
+  def measure(grid)
+   {height: grid.length,
+    width: (grid.map { |col| col.length }).max}
+  end
+end
+
+class Arguments
+  attr_reader :align, :padding, :input
+
+  def initialize(opts)
+    @align_map = {
+      "middle" => MidAlign,
+      "right" => RightAlign,
+      "left" => LeftAlign}
+    @padding = nil
+    @align = LeftAlign
+    @input = nil
+    parse(opts[:args])
+  end
+
+  def parse(args)
+    n = 0
+    until n == args.length
+      case args[n]
+      when "-p"
+        @padding = args[n + 1]
+        n += 1
+      when "-a"
+        @align = @align_map[args[n + 1]]
+        n += 1
+      else
+        @input = args[n]
+      end
+      n += 1
+    end
+  end
+end
+
+Main.new.run
