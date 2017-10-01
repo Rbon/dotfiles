@@ -1,14 +1,13 @@
 #! /usr/bin/env ruby
 
-# Main Class
+# Class for running the script
 class Main
   def initialize
     @args = Arguments.new(args: ARGV)
-    @line = @args.input.downcase
-    @grid = @line.split.map(&:chars)
+    @grid = @args.input.downcase.split.map(&:chars)
     @padder = @args.padder.new(padding: @args.padding)
-    @replacer = Replacer.new
     @filler = Filler.new(padding: @padder.padding)
+    @replacer = Replacer.new
   end
 
   def run
@@ -37,7 +36,7 @@ class Filler
   end
 
   def fill!(grid)
-    return unless @padding # gotta save those CPU cycles
+    return if @padding.empty? # gotta save those CPU cycles
     grid.map! { |row| row_fill(row) }
   end
 
@@ -55,7 +54,7 @@ class Padder
   end
 
   def pad!(grid)
-    return unless @padding # gotta save those CPU cycles
+    return if @padding.empty? # gotta save those CPU cycles
     @width = grid.map(&:length).max
     grid.map! { |row| row_pad(row) }
   end
