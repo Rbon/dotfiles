@@ -4,14 +4,17 @@ class Main
   def initialize
     @args = Arguments.new(args: ARGV)
     @line = @args.input.downcase
-    @emojifier = Emojifier.new
+    @grid = @line.split.map(&:chars)
+    @replacer = Replacer.new
     @filler = Filler.new(align: @args.align, padding: @args.padding)
     @joiner = Joiner.new
   end
 
   def run
-    output = []
-    puts @joiner.join(@filler.fill(@emojifier.emojify(@line)))
+    # @replacer.replace!(@grid.grid)
+    @filler.fill!(@grid)
+    LeftPadder.new.pad!(@grid)
+    puts @joiner.join(@grid)
   end
 end
 
@@ -25,30 +28,32 @@ class Joiner
   end
 end
 
-class Emojifier
-  def change(word)
-    word.chars.map { |char| ":regional_indicator_#{char}:" }
+class Replacer
+  def initialize
+    @replacement = ":regional_indicator_%s:"
   end
 
-  def emojify(line)
-    line.split.map { |word| change(word) }
+  def replace!(grid)
+    grid.map! { |row| row.map { |cell| @replacement % cell } }
   end
 end
 
 class Filler
   def initialize(opts)
-    @padding = opts[:padding]
-    @align = opts[:align].new(padding: @padding)
+    @padding = opts[:padding] || ":clap:"
   end
 
-  def fill(grid)
-    @align.fill(grid)
+  def fill!(grid)
+    grid.map! { |row| row_fill(row) }
+  end
+
+  def row_fill(row)
+    row.zip(Array.new(row.length - 1) { @padding }).flatten.compact
   end
 end
 
-class MidAlign
+class MidPadder
   def initialize(opts = {})
-    @ruler = (opts[:ruler] || Ruler).new
     @padding = opts[:padding] || ":clap:"
   end
 
@@ -59,7 +64,7 @@ class MidAlign
         Array.new(row.length - 1) { @padding }
       ).flatten.compact
     end
-    size = @ruler.measure(output)
+    size = measure(output)
     output2 = []
     output.each do |row|
       line = []
@@ -72,25 +77,18 @@ class MidAlign
   end
 end
 
-class LeftAlign
+class LeftPadder
   def initialize(opts = {})
-    @ruler = (opts[:ruler] || Ruler).new
-    @padding = opts[:padding] || ""
+    @padding = opts[:padding] || ":clap:"
   end
 
-  def fill(grid)
-    output = []
-    size = @ruler.measure(grid)
-    grid.each do |row|
-      difference = size[:width] - row.length
-      buffer = Array.new(difference) { @padding }
-      output << [row, buffer].flatten
-    end
-    output
+  def pad!(grid)
+    width = grid.map(&:length).max
+    grid.map! { |row| [row, ([@padding] * (width - row.length))].flatten }
   end
 end
 
-class RightAlign
+class RightPadder
   def initialize(opts = {})
     @align = opts[:align]
     @ruler = (opts[:ruler] || Ruler).new
@@ -110,10 +108,6 @@ class RightAlign
 end
 
 class Ruler
-  def measure(grid)
-   {height: grid.length,
-    width: (grid.map { |col| col.length }).max}
-  end
 end
 
 class Arguments
@@ -121,11 +115,11 @@ class Arguments
 
   def initialize(opts)
     @align_map = {
-      "middle" => MidAlign,
-      "right" => RightAlign,
-      "left" => LeftAlign}
+      "middle" => MidPadder,
+      "right" => RightPadder,
+      "left" => LeftPadder}
     @padding = nil
-    @align = LeftAlign
+    @align = LeftPadder
     @input = nil
     parse(opts[:args])
   end
