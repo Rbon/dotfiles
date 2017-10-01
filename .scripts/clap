@@ -1,33 +1,25 @@
 #! /usr/bin/env ruby
 
+# Main Class
 class Main
   def initialize
     @args = Arguments.new(args: ARGV)
     @line = @args.input.downcase
     @grid = @line.split.map(&:chars)
+    @padder = @args.padder.new(padding: @args.padding)
     @replacer = Replacer.new
-    @filler = Filler.new(align: @args.align, padding: @args.padding)
-    @joiner = Joiner.new
+    @filler = Filler.new(padding: @padder.padding)
   end
 
   def run
-    # @replacer.replace!(@grid.grid)
+    @replacer.replace!(@grid)
     @filler.fill!(@grid)
-    LeftPadder.new.pad!(@grid)
-    puts @joiner.join(@grid)
+    @padder.pad!(@grid)
+    puts @grid.map { |row| row.join(" ") }.join("\n")
   end
 end
 
-class Joiner
-  def join(grid)
-    output = []
-    grid.each do |row|
-      output << row.join(" ")
-    end
-    output.join("\n")
-  end
-end
-
+# Replaces a 2D array of characters with their discord emoji version
 class Replacer
   def initialize
     @replacement = ":regional_indicator_%s:"
@@ -38,12 +30,14 @@ class Replacer
   end
 end
 
+# Interleaves the rows of a 2D grid with a filler value
 class Filler
   def initialize(opts)
-    @padding = opts[:padding] || ":clap:"
+    @padding = opts[:padding]
   end
 
   def fill!(grid)
+    return unless @padding # gotta save those CPU cycles
     grid.map! { |row| row_fill(row) }
   end
 
@@ -52,74 +46,61 @@ class Filler
   end
 end
 
-class MidPadder
-  def initialize(opts = {})
-    @padding = opts[:padding] || ":clap:"
-  end
+# Padder superclass. Holds methods for its children to use
+class Padder
+  attr_reader :padding
 
-  def fill(grid)
-    output = []
-    grid.each do |row|
-      output << row.zip(
-        Array.new(row.length - 1) { @padding }
-      ).flatten.compact
-    end
-    size = measure(output)
-    output2 = []
-    output.each do |row|
-      line = []
-      difference = [(size[:width] - row.length) / 2, 0].max
-      buffer = Array.new(difference) { @padding }
-      line << [buffer, row, buffer]
-      output2 << line.flatten
-    end
-    output2
-  end
-end
-
-class LeftPadder
   def initialize(opts = {})
     @padding = opts[:padding] || ":clap:"
   end
 
   def pad!(grid)
-    width = grid.map(&:length).max
-    grid.map! { |row| [row, ([@padding] * (width - row.length))].flatten }
+    return unless @padding # gotta save those CPU cycles
+    @width = grid.map(&:length).max
+    grid.map! { |row| row_pad(row) }
+  end
+
+  def margin(row)
+    [@padding] * (@width - row.length)
   end
 end
 
-class RightPadder
+# Left justifies a 2D array by padding rows with a value
+class LeftPadder < Padder
   def initialize(opts = {})
-    @align = opts[:align]
-    @ruler = (opts[:ruler] || Ruler).new
-    @padding = opts[:padding] || ":clap:"
+    @padding = opts[:padding] || ""
   end
 
-  def fill(grid)
-    output = []
-    size = @ruler.measure(grid)
-    grid.each do |row|
-      difference = size[:width] - row.length
-      buffer = Array.new(difference) { @padding }
-      output << [buffer, row].flatten
-    end
-    output
+  def row_pad(row)
+    [row, margin(row)].flatten
   end
 end
 
-class Ruler
+# Right justifies a 2D array by padding rows with a value
+class RightPadder < Padder
+  def row_pad(row)
+    [margin(row), row].flatten
+  end
+end
+
+# Center justifies a 2D array by padding rows with a value
+class MidPadder < Padder
+  def row_pad(row)
+    half = margin(row).slice(0, margin(row).length / 2)
+    [half, row, half].flatten
+  end
 end
 
 class Arguments
-  attr_reader :align, :padding, :input
+  attr_reader :padder, :padding, :input
 
   def initialize(opts)
-    @align_map = {
+    @pad_map = {
       "middle" => MidPadder,
       "right" => RightPadder,
       "left" => LeftPadder}
     @padding = nil
-    @align = LeftPadder
+    @padder = LeftPadder
     @input = nil
     parse(opts[:args])
   end
@@ -132,7 +113,7 @@ class Arguments
         @padding = args[n + 1]
         n += 1
       when "-a"
-        @align = @align_map[args[n + 1]]
+        @padder = @pad_map[args[n + 1]]
         n += 1
       else
         @input = args[n]
