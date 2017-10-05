@@ -3,9 +3,14 @@
 # Class for running the script
 class Main
   def initialize
-    @args = Arguments.new(args: ARGV)
-    @grid = @args.input.downcase.split.map(&:chars)
-    @padder = @args.padder.new(padding: @args.padding)
+    @args = Arguments.new(
+      arg_map: {"-p" => :padding, "-a" => :alignment}).parse(ARGV)
+    @pad_map = {
+      "middle" => MidPadder,
+      "right" => RightPadder,
+      "left" => LeftPadder}
+    @grid = @args[:input].downcase.split.map(&:chars)
+    @padder = @pad_map[@args[:alignment]].new(padding: @args[:padding])
     @filler = Filler.new(padding: @padder.padding)
     @replacer = Replacer.new
   end
@@ -90,34 +95,23 @@ class MidPadder < Padder
   end
 end
 
+# Parses command line arguments
 class Arguments
-  attr_reader :padder, :padding, :input
+  attr_reader :args
 
   def initialize(opts)
-    @pad_map = {
-      "middle" => MidPadder,
-      "right" => RightPadder,
-      "left" => LeftPadder}
-    @padding = nil
-    @padder = LeftPadder
-    @input = nil
-    parse(opts[:args])
+    @arg_map = opts[:arg_map]
+    @line = opts[:line].reverse
   end
 
-  def parse(args)
-    n = 0
-    until n == args.length
-      case args[n]
-      when "-p"
-        @padding = args[n + 1]
-        n += 1
-      when "-a"
-        @padder = @pad_map[args[n + 1]]
-        n += 1
+  def parse(line)
+    until line.empty?
+      arg = line.pop
+      if @arg_map[arg]
+        @args[@arg_map[arg]] = line.pop
       else
-        @input = args[n]
+        @args[:input] = arg
       end
-      n += 1
     end
   end
 end
