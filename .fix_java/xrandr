@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# This will loop through all command line arguments.
+# If it finds "--rate" then it looks at the next argument.
+# If the next argument is "59" it is changed to "59.99"
+# Then xrandr is run with the modified arguments.
+# The exact replacement might need to be different for your monitor.
+# This script was made my someone else, who had it set to "59.95"
+
+options=()  # the buffer array for the parameters
+
+while [[ $1 ]]
+do
+    case "$1" in
+        --rate)
+            options+=("$1")
+            shift
+            case "$1" in
+                59)
+                    options+=("59.99")
+                    shift
+                    ;;
+                *)
+                    options+=("$1")
+                    shift
+                    ;;
+            esac
+            ;;
+        *)
+            options+=("$1")
+            shift
+            ;;
+    esac
+done
+
+exec /usr/bin/xrandr "${options[@]}"
