@@ -1,12 +1,20 @@
 #!/usr/bin/env bash
 
-queue=$(realpath $1)
+cd ~/Videos/youtube
+vim .autodl.txt \
+&& youtube-dl -a .autodl.txt \
+&& echo > .autodl.txt
 
-if [[ -d $2 ]]; then
-  cd $2
-fi
+echo "Finished downloading videos."
 
-trap "exit" INT
-while read line || [[ -n $line ]]; do
-  youtube-dl $line
-done < $queue
+# queue=$(realpath $1)
+
+# if [[ -d $2 ]]; then
+  # cd $2
+# fi
+
+# trap "exit" INT
+# while read line || [[ -n $line ]]; do
+  # youtube-dl $line
+# done < $queue
+# echo > $queue

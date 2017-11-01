@@ -4,13 +4,13 @@
 class Main
   def initialize
     @args = Arguments.new(
-      arg_map: {"-p" => :padding, "-a" => :alignment}).parse(ARGV)
+      arg_map: {"-p" => :pad, "-a" => :align}).parse(ARGV)
     @pad_map = {
       "middle" => MidPadder,
       "right" => RightPadder,
       "left" => LeftPadder}
     @grid = @args[:input].downcase.split.map(&:chars)
-    @padder = @pad_map[@args[:alignment]].new(padding: @args[:padding])
+    @padder = (@pad_map[@args[:align]] || LeftPadder).new(padding: @args[:pad])
     @filler = Filler.new(padding: @padder.padding)
     @replacer = Replacer.new
   end
@@ -101,10 +101,11 @@ class Arguments
 
   def initialize(opts)
     @arg_map = opts[:arg_map]
-    @line = opts[:line].reverse
+    @args = {}
   end
 
   def parse(line)
+    line = line.reverse
     until line.empty?
       arg = line.pop
       if @arg_map[arg]
@@ -113,6 +114,7 @@ class Arguments
         @args[:input] = arg
       end
     end
+    @args
   end
 end
 
