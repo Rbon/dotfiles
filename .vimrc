@@ -85,6 +85,7 @@ set clipboard=unnamedplus
 " set wildmode=longest,list,full
 " set wildmenu
 set splitright
+set scrolloff=3 " Keep 3 lines below and above the cursor
 
 "" Global stuff
 let g:AutoPairs={'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`','|':'|'}
@@ -109,7 +110,7 @@ nnoremap <S-j>      <C-d>
 nnoremap <S-k>      <C-u>
 nnoremap <C-p>      o<Esc>p
 " nnoremap <C-o>n    :
-" nnoremap <space>   za
+nnoremap <space>   za
 
 let g:lasttab = 1
 nmap <C-t><Tab> :exe "tabn ".g:lasttab<CR>
