@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+for file in "$@"; do
+  filename=$(basename "$file")
+  filename="${filename%.*}"
+  echo "Encoding: ${filename}.mp3..."
+  ffmpeg -loglevel quiet -i "$file" -qscale:a 0 "${filename}.mp3"
+done
+
