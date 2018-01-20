@@ -7,10 +7,10 @@ title=$(echo "$cmus_status" | sed -n 's/tag title //p')
 file_path=$(echo "$cmus_status" | sed -n 's/file //p')
 file_name=$(basename "$file_path")
 
-if [ -n "$artist" ]; then
-  first="$artist - "
-elif [ -n "$album" ]; then
+if [ -n "$album" ]; then
   first="$album - "
+elif [ -n "$artist" ]; then
+  first="$artist - "
 else
   first=""
 fi
@@ -24,7 +24,7 @@ fi
 if [ $play_status = "paused" ]; then
   pause_state="(||)"
 else
-        pause_state="(|>)"
+  pause_state="(|>)"
 fi
 
-echo "♪ ${first}${second} ${pause_state}  |  "
+echo "${pause_state} ${first}${second}  |  "

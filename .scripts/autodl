@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-cd ~/Videos/youtube
-vim .autodl.txt \
-&& youtube-dl -a .autodl.txt \
-&& echo > .autodl.txt
+list=~/.autodl.txt
+cd $1
+vim $list \
+&& youtube-dl -a $list \
+&& echo > $list
 
 echo "Finished downloading videos."
 
