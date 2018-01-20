@@ -39,6 +39,7 @@ export PATH="$PATH:$HOME/.scripts"
 export KEYTIMEOUT=1 # decrese lag when switching to normal mode
 # export TERM=rxvt-unicode-256color
 bindkey -v '^?' backward-delete-char
+eval `dircolors ~/.dir_colors`
 
 [ -f ~/.aliases  ] && source ~/.aliases
 [ -f ~/.privaterc  ] && source ~/.privaterc
