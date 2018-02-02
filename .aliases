@@ -13,3 +13,4 @@ alias spotify="spotify --ap=194.132.196.162" ## fixes log-in problem
 alias cmatrix="cmatrix -s -u 9 -C cyan"
 alias lanip="ip addr show | grep -o 'inet 192\.168\.[0-9]\.[0-9]*' | tail -c 12"
 alias tmux="tmux -2"
+alias update-dotfiles="git -C ~/.dotfiles pull"
