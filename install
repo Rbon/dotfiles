@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 ### WARNING: BEFORE RUNNING THIS, BACK UP ANY DOTFILES YOU DON'T WANT TO LOSE
 
