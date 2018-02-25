@@ -3,7 +3,7 @@
 dotfiles=".aliases .dir_colors .vimrc .tmux.conf .zshrc"
 
 script_location="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd "${HOME}/temp"
+cd $HOME
 
 function link_files {
   for dotfile in $dotfiles; do
