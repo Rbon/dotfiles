@@ -9,8 +9,17 @@ cd $HOME
 
 function link_files {
   for dotfile in $dotfiles; do
+    echo "Making link for: ${dotfile}"
     ln -sf "${script_location}/${dotfile}"
   done
 }
 
+function install_vundle {
+  echo "Installing Vundle..."
+  git clone --quiet \
+    https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  echo "Done."
+}
+
 link_files
+install_vundle
