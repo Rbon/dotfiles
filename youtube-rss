@@ -1,0 +1,8 @@
+### https://www.youtube.com/feeds/videos.xml?channel_id=UCTjqo_3046IXFFGZ_M5jedA
+
+#! /usr/bin/env bash
+
+while read line; do
+  id="$(echo $line | grep "<id>" | head -c -6 | tail -c +14)"
+  if [[ ! -z "${id}" ]]; then printf "${id}\n"; fi
+done < videos.xml
