@@ -43,7 +43,7 @@ class YoutubeRss
       channel.video_list.each(&:download)
     end
     File.write(@sync_time_file, Time.now)
-    File.write(@dldb_file, "")
+    File.open(@dldb_file, "w") {}
   end
 end
 
