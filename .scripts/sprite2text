@@ -1,0 +1,75 @@
+#! /usr/bin/env ruby
+
+require "rmagick"
+
+## Runs the mapper over every pixel of the image, and outputs the result.
+class Main
+  def initialize(opts)
+    @img = opts[:img]
+    @mapper = opts[:mapper]
+    @pixel_list = []
+  end
+
+  def run
+    output = ""
+    @img.each_pixel { |pixel| @pixel_list.push(pixel) }
+    @pixel_list.each_slice(@img.columns) do |row|
+      row.each { |pixel| output << @mapper.run(pixel) }
+      output << "\n"
+    end
+    output
+  end
+end
+
+## Keeps track of what characters to output.
+class Text
+  attr_reader :list
+
+  def initialize(opts = {})
+    @list = opts[:chars] || ["█", "▒", "░", " "]
+  end
+end
+
+## Separates and manages the colors of the images.
+class Colors
+  attr_reader :white, :list
+
+  def initialize(opts)
+    @img = opts[:img]
+    @background = opts[:background] ? "##{opts[:background]}" : "magenta"
+    @background = Magick::Pixel.from_color(@background)
+    @list = @img.color_histogram.keys
+    puts @list
+    puts
+    puts @background
+    @list.delete(@background) { not_found }
+    @black, @gray1, @gray2, @white = @list
+  end
+
+  def not_found
+    puts "Background color not found."
+    exit
+  end
+end
+
+## Maps the colors of the image to the corresponding text.
+class Mapper
+  def initialize(opts)
+    @colors = opts[:colors]
+    @text = opts[:text]
+    @width = opts[:width] || 2
+    @map = {}
+    @text.each_with_index { |char, index| @map[@colors.list[index]] = char }
+  end
+
+  def run(pixel)
+    (@map[pixel] || @map[@colors.white]) * @width
+  end
+end
+
+img = Magick::Image.read(ARGV[0]).first
+text = Text.new
+colors = Colors.new(img: img, background: ARGV[1])
+mapper =  Mapper.new(text: text.list, colors: colors)
+main = Main.new(img: img, mapper: mapper)
+puts main.run
