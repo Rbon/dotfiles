@@ -24,6 +24,11 @@ Plugin 'speeddating.vim'
 Plugin 'lrvick/Conque-Shell'
 Plugin 'gcmt/taboo.vim'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'kana/vim-textobj-user'
+Plugin 'beloglazov/vim-textobj-quotes'
+Plugin 'nelstrom/vim-textobj-rubyblock'
+Plugin 'tpope/vim-fugitive'
+Plugin 'idanarye/vim-merginal'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -101,11 +106,11 @@ nnoremap <C-w>"     :vnew<space>
 nnoremap <C-w>=     :new<space>
 nnoremap <leader>r  :source ~/.vimrc<CR>
 nnoremap <C-t>      <Nop>
-nnoremap <C-t>n     :tabedit<space>
-nnoremap <C-t>l     :tabnext<CR>
-nnoremap <C-t>h     :tabprevious<CR>
-nnoremap <C-t>r     :TabooRename<space>
-nnoremap <C-t><S-r> :TabooReset<CR>
+nnoremap <C-t>n     <Esc>:tabedit<space>
+nnoremap <C-t>l     <Esc>:tabnext<CR>
+nnoremap <C-t>h     <Esc>:tabprevious<CR>
+nnoremap <C-t>r     <Esc>:TabooRename<space>
+nnoremap <C-t><S-r> <Esc>:TabooReset<CR>
 nnoremap <S-j>      <C-d>
 nnoremap <S-k>      <C-u>
 nnoremap <C-p>      o<Esc>p

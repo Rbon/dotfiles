@@ -22,9 +22,9 @@ else
 fi
 
 if [ $play_status = "paused" ]; then
-  pause_state="(||)"
+  pause_state="Paused:"
 else
-  pause_state="(|>)"
+  pause_state="Now playing:"
 fi
 
 echo "${pause_state} ${first}${second}  |  "
