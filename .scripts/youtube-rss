@@ -9,17 +9,17 @@ require "json"
 
 class Main
   def initialize
-    @sync_time_file = "time.txt"
-    @dldb_file = "dldb.txt"
+    @sync_time_file = File.expand_path("~/.scripts/time.txt")
+    @dldb_file = File.expand_path("~/.scripts/dldb.txt")
     @dl_path = ARGV[0] || "."
-    @channel_list = File.readlines("channel_list.txt")
+    @channel_list = File.readlines(File.expand_path("~/.config/youtube-rss/channel_list.txt"))
     @feed_parser = FeedParser.new(
       channel_class: Channel,
       video_class: Video,
       last_sync_time: Time.parse(File.read(@sync_time_file)),
       dldb_file: @dldb_file,
       dl_path: @dl_path,
-      cache_file: "cache.json"
+      cache_file: File.expand_path("~/.config/youtube-rss/cache.json")
     )
   end
 
@@ -116,7 +116,7 @@ class Channel
   end
 
   def sync_time=(time)
-    cache = File.read("cache.json")
+    cache = File.read(@cache_file)
     cache = JSON.parse(cache)
     cache[@name] = time
     file = File.open(@cache_file, "w")
@@ -125,11 +125,10 @@ class Channel
   end
 
   def sync_time
-    time = File.read("cache.json")
+    time = File.read(@cache_file)
     time = JSON.parse(time)[@name]
     Time.parse(time || "2018-03-01")
   end
-
 end
 
 class Video
