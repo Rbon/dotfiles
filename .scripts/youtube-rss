@@ -35,7 +35,7 @@ class YoutubeRss
     @channel_list.each do |line|
       channel = @feed_parser.channel(line)
       puts channel.name
-      channel.video_list.each(&:download)
+      channel.new_videos.each(&:download)
     end
   end
 end
@@ -82,12 +82,7 @@ class FeedParser
       @tag_regex.match(line) { |match| data[match[:tag]] = match[:value] }
     end
     published = Time.parse(data["published"])
-    if channel.sync_time < published
-      downloader = Downloader.new(dl_path: @dl_path, channel: channel)
-    else
-      downloader = NullDownloader.new
-    end
-    @video_class.new(info: data, downloader: downloader)
+    @video_class.new(info: data, channel: channel)
   end
 end
 
@@ -116,40 +111,32 @@ class Channel
     time = JSON.parse(time)[@name]
     Time.parse(time || "2018-03-01")
   end
+
+  def new_videos
+    @video_list.select(&:new?)
+  end
 end
 
 class Video
   attr_reader :id, :published, :title, :description
 
-  def initialize(info:, downloader:)
-    @id = info["id"]
+  def initialize(info:, channel:)
+    @id = info["yt:videoId"]
     @title = info["title"]
     @description = info["description"]
     @published = Time.parse(info["published"])
-    @downloader = downloader
-  end
-
-  def download
-    puts "CHECKING VIDEO: #{@title}"
-    @downloader.download(id: @id, published: @published)
-  end
-end
-
-class Downloader
-  def initialize(dl_path:, channel:)
-    @dl_path = dl_path
     @channel = channel
   end
 
-  def download(id:, published:)
-    # Dir.chdir(File.expand_path(@dl_path)) { system("youtube-dl #{id}") }
-    # @channel.sync_time = published
-    puts "fake downloading: #{id}"
+  def new?
+    @channel.sync_time < @published
+    # @published > Time.parse("2018-03-01")
   end
-end
 
-class NullDownloader
-  def download(id:, published:)
+  def download
+    Dir.chdir(File.expand_path(@dl_path)) { system("youtube-dl #{@id}") }
+    @channel.sync_time = @published
+    # puts "fake downloading: #{@title}"
   end
 end
 
