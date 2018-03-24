@@ -9,15 +9,11 @@ require "json"
 
 class Main
   def initialize
-    @sync_time_file = File.expand_path("~/.scripts/time.txt")
-    @dldb_file = File.expand_path("~/.scripts/dldb.txt")
     @dl_path = ARGV[0] || "."
     @channel_list = File.readlines(File.expand_path("~/.config/youtube-rss/channel_list.txt"))
     @feed_parser = FeedParser.new(
       channel_class: Channel,
       video_class: Video,
-      last_sync_time: Time.parse(File.read(@sync_time_file)),
-      dldb_file: @dldb_file,
       dl_path: @dl_path,
       cache_file: File.expand_path("~/.config/youtube-rss/cache.json")
     )
@@ -25,20 +21,16 @@ class Main
 
   def run
     YoutubeRss.new(
-      sync_time_file: @sync_time_file,
       channel_list: @channel_list,
-      video_dlr: @video_dlr,
       feed_parser: @feed_parser
     ).run
   end
 end
 
 class YoutubeRss
-  def initialize(opts)
-    @sync_time_file = opts[:sync_time_file]
-    @channel_list = opts[:channel_list]
-    @feed_parser = opts[:feed_parser]
-    @video_dlr = opts[:video_dlr]
+  def initialize(channel_list:, feed_parser: FeedParser.new)
+    @channel_list = channel_list
+    @feed_parser = feed_parser
   end
 
   def run
@@ -51,25 +43,24 @@ class YoutubeRss
 end
 
 class FeedParser
-  def initialize(opts)
-    @channel_class = opts[:channel_class]
-    @video_class = opts[:video_class]
+  def initialize(channel_class: Channel, video_class: Video,
+                 cache_file:, dl_path:)
+    @channel_class = channel_class
+    @video_class = video_class
     @tag_regex = /<(?<tag>.*)>(?<value>.*)<.*>/
-    @last_sync_time = opts[:last_sync_time]
-    @dldb_file = opts[:dldb_file]
-    @dl_path = opts[:dl_path]
+    @dl_path = dl_path
+    @cache_file = cache_file
     @feed_types = {
       channel: "https://www.youtube.com/feeds/videos.xml?channel_id=%s",
       user: "https://www.youtube.com/feeds/videos.xml?user=%s"
     }
-    @cache_file = opts[:cache_file]
   end
 
   def channel(url)
     url = url.split("#")[0].strip
     type, id = url.split("/")
     feed = open(@feed_types[type.to_sym] % id) { |io| data = io.read }
-    # feed = File.read("videos.xml")
+    # feed = File.read(File.expand_path("~/.scripts/videos.xml"))
     feed = feed.split("<entry>")
     data = {}
     feed[0].lines do |line|
@@ -105,14 +96,14 @@ class FeedParser
 end
 
 class Channel
-  attr_reader :video_list, :name, :id
-  attr_writer :video_list
+  attr_reader :name, :id
+  attr_accessor :video_list
 
-  def initialize(opts)
-    @id = opts[:id]
-    @name = opts[:name]
-    @video_list = opts[:video_list]
-    @cache_file = opts[:cache_file]
+  def initialize(id:, name:, cache_file:)
+    @id = id
+    @name = name
+    @video_list = []
+    @cache_file = cache_file
   end
 
   def sync_time=(time)
@@ -134,13 +125,13 @@ end
 class Video
   attr_reader :id, :published, :title, :description, :channel
 
-  def initialize(opts)
-    @id = opts[:id]
-    @title = opts[:title]
-    @description = opts[:description]
-    @published = opts[:published]
-    @dl_path = opts[:dl_path]
-    @channel = opts[:channel]
+  def initialize(id:, title:, description: nil, published:, dl_path:, channel:)
+    @id = id
+    @title = title
+    @description = description
+    @published = published
+    @dl_path = dl_path
+    @channel = channel
   end
 
   def download
@@ -156,6 +147,10 @@ class Video
     Dir.chdir(File.expand_path(@dl_path)) { system("youtube-dl #{@id}") }
     @channel.sync_time = @published
   end
+
+  # def download_when_true
+    # puts "fake downloading video"
+  # end
 
   def download_when_false
   end
