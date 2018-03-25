@@ -57,8 +57,8 @@ class FeedParser
   def channel(url)
     url = url.split("#")[0].strip
     type, id = url.split("/")
-    # feed = open(@feed_types[type.to_sym] % id) { |io| data = io.read }
-    feed = File.read(File.expand_path("~/.scripts/videos.xml"))
+    feed = open(@feed_types[type.to_sym] % id) { |io| data = io.read }
+    # feed = File.read(File.expand_path("~/.scripts/videos.xml"))
     feed = feed.split("<entry>")
     data = {}
     feed[0].lines do |line|
@@ -82,7 +82,7 @@ class FeedParser
       @tag_regex.match(line) { |match| data[match[:tag]] = match[:value] }
     end
     published = Time.parse(data["published"])
-    @video_class.new(info: data, channel: channel)
+    @video_class.new(info: data, channel: channel, dl_path: @dl_path)
   end
 end
 
@@ -120,12 +120,13 @@ end
 class Video
   attr_reader :id, :published, :title, :description
 
-  def initialize(info:, channel:)
+  def initialize(info:, channel:, dl_path:)
     @id = info["yt:videoId"]
     @title = info["title"]
     @description = info["description"]
     @published = Time.parse(info["published"])
     @channel = channel
+    @dl_path = dl_path
   end
 
   def new?
