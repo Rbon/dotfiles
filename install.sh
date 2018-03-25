@@ -1,5 +1,3 @@
-#! /usr/bin/env bash
-
 ### WARNING: BEFORE RUNNING THIS, BACK UP ANY DOTFILES YOU DON'T WANT TO LOSE
 
 dotfiles=".aliases .dir_colors .vimrc .tmux.conf .zshrc"
