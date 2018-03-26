@@ -1,4 +1,3 @@
-
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -7,6 +6,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
+"
+
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -79,7 +80,9 @@ function! Tab_Or_Complete()
   endif
 endfunction
 :inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
-:set dictionary="/usr/dict/words"
+set completeopt="longest"
+" :set dictionary="/usr/dict/words"
+
 
 "" misc
 set colorcolumn=81
@@ -87,7 +90,7 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 " autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 runtime macros/matchit.vim
 set clipboard=unnamedplus
-" set wildmode=longest,list,full
+" set wildmode=""
 " set wildmenu
 set splitright
 set scrolloff=3 " Keep 3 lines below and above the cursor
@@ -97,7 +100,7 @@ let g:AutoPairs={'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`','|':'|'}
 
 " Keybinds {
 nnoremap <C-s>      :w<CR>
-inoremap <C-s>      <Esc>:wa<CR>
+" inoremap <C-s>      <Esc>:wa<CR>
 nnoremap <C-q>      :q<CR>
 nnoremap <C-z>      :undo<CR>
 nnoremap <leader>u  :GundoToggle<CR>

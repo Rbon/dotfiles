@@ -16,3 +16,19 @@ alias tmux="tmux -2"
 alias update-dotfiles="git -C ~/.dotfiles pull"
 alias youtube-rss="youtube-rss ~/Videos/youtube"
 alias v="vim"
+
+function bak {
+  if [[ $(echo $1 | tail -c 5) = ".bak" ]]; then
+    echo "bak: file already ends in '.bak'"
+  else
+    mv $1 $1.bak
+  fi
+}
+
+function unbak {
+  if [[ $(echo $1 | tail -c 5) != ".bak" ]]; then
+    echo "unbak: file does not end in '.bak'"
+  else
+    mv $1 $(echo $1 | head -c -5)
+  fi
+}
