@@ -1,14 +1,14 @@
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
-Layout/IndentHash:
-  EnforcedStyle: consistent
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: same_line
 
 Layout/MultilineHashBraceLayout:
   EnforcedStyle: same_line
 
-Layout/SpaceInsideHashLiteralBraces:
-  Enabled: false
-
-Layout/MultilineMethodCallBraceLayout:
-  EnforcedStyle: same_line
+Layout/DotPosition:
+  EnforcedStyle: trailing
