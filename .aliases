@@ -1,9 +1,15 @@
 # keystroke saving
 alias ber="bundle exec rspec"
+alias caaber="clear && bundle exec rspec"
+alias gcam="git commit -am"
+alias gco="git checkout"
 alias soundcloud-dl="scdl"
 alias v="vim"
 
 # preferred options
+alias cmatrix="cmatrix -s -u 9 -C cyan"
+alias cp="cp -a --preserve=xattr" # keep tags
+alias rsync="rsync --xattrs" # keep tags
 alias grep='grep --color=auto'
 alias ls="ls -AX --color=auto --group-directories-first"
 alias spotify="spotify --ap=194.132.196.162" ## fixes log-in problem
@@ -13,12 +19,13 @@ alias youtube-rss="youtube-rss ~/Videos/youtube"
 alias youtube-webm="youtube-dl --recode-video webm -o '%(title)s.%(ext)s'"
 
 # helpful mini-functions
-alias cmatrix="cmatrix -s -u 9 -C cyan"
 alias fix-pacman="sudo pacman -Syy"
 alias lanip="ip addr show | grep -o 'inet 192\.168\.[0-9]\.[0-9]*' | tail -c 12"
 alias pac-remove-orphans="sudo pacman -Rns $(pacman -Qtdq)"
+alias update="sudo pacman -Syu --noconfirm"
 alias update-dotfiles="git -C ~/.dotfiles pull"
 # alias tmux="tmux source-file ~/.config/tmux.conf" # delete this by 2019
+alias getxattr='getfattr -d -m ".*"'
 
 # silly things
 alias starwars="telnet towel.blinkenlights.nl"
@@ -28,7 +35,7 @@ function bak {
   if [[ $(echo $1 | tail -c 5) = ".bak" ]]; then
     echo "bak: file already ends in '.bak'"
   else
-    mv $1 $1.bak
+    cp $1 $1.bak
   fi
 }
 
@@ -38,4 +45,12 @@ function unbak {
   else
     mv $1 $(echo $1 | head -c -5)
   fi
+}
+
+function lint {
+  rubocop $1
+  echo
+  ack if $1
+  echo
+  flog $1
 }
