@@ -2,6 +2,7 @@
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
+setopt HIST_IGNORE_ALL_DUPS
 bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
@@ -36,6 +37,7 @@ promptinit
 prompt redhat
 
 export PATH="$PATH:$HOME/.scripts"
+export VK_ICD_FILENAMES="/usr/share/vulkan/icd.d/radeon_icd.x86_64.json"
 export KEYTIMEOUT=1 # decrese lag when switching to normal mode
 # export TERM=rxvt-unicode-256color
 bindkey -v '^?' backward-delete-char

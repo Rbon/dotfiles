@@ -27,4 +27,4 @@ else
   pause_state="Now playing:"
 fi
 
-echo "${pause_state} ${first}${second}  |  "
+echo "${pause_state} ${first}${second}"

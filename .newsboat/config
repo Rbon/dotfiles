@@ -1,10 +1,10 @@
 # show-keymap-hint false
+# feed-sort-order name
 # swap-title-and-hints false
 browser firefox
 # external-url-viewer "/usr/bin/urlview"
 # pager internal
 # html-renderer "/usr/bin/elinks -dump"
-
 # auto-reload yes
 
 bind-key j next
@@ -18,11 +18,8 @@ bind-key k up article
 bind-key J next article
 bind-key K prev article
 
-macro , open-in-browser
-macro r set browser "firefox-reader"; open-in-browser ; set browser firefox
-
-# macro y set browser "mpv %u"; open-in-browser ; set browser "elinks %u"
-# macro o set browser "vimprobable2 %u"; open-in-browser ; set browser "elinks %u"
+macro , open-in-browser-and-mark-read
+macro r set browser "firefox-reader"; open-in-browser-and-mark-read ; set browser firefox
 
 color background        magenta default
 color listnormal        default default
@@ -32,4 +29,3 @@ color listfocus_unread  blue    color0
 color info              cyan    color0
 color article           default default
 
-# feed-sort-order name

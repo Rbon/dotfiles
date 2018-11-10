@@ -15,6 +15,7 @@ alias ls="ls -AX --color=auto --group-directories-first"
 alias spotify="spotify --ap=194.132.196.162" ## fixes log-in problem
 alias subl3="subl3 -n"
 alias tmux="tmux -2"
+alias youtube-mp3="youtube-dl -x --audio-format=mp3"
 alias youtube-rss="youtube-rss ~/Videos/youtube"
 alias youtube-webm="youtube-dl --recode-video webm -o '%(title)s.%(ext)s'"
 
