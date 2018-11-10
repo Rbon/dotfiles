@@ -1,2 +1,2 @@
 #! /usr/bin/env bash
-df -h /home | tail --lines 1 | awk '{print "Disk Usage: ["$3" / "$2"] ("$4" Free)"}'
+df -h /home | tail --lines 1 | awk '{print "["$3" / "$2"] ("$4" Free)"}'
