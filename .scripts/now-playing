@@ -6,8 +6,8 @@ line_count=$(echo "$info" | wc -l)
 if [[ $line_count == 3 ]]
 then
   parsed_info=$(echo "$info" | head --lines 1)
-  song_state=$(echo "$info" | awk '/paused/{ if(NR==2) print $1 }')
-  echo "$parsed_info $song_state"
+  song_state=$(echo "$info" | awk '/paused/{ if(NR==2) print " "$1 }')
+  echo "${parsed_info}${song_state}"
 else
   echo ""
 fi
