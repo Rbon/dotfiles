@@ -1,2 +1,10 @@
 #! /usr/bin/env bash
-df -h /home | tail --lines 1 | awk '{print "["$3" / "$2"] ("$4" Free)"}'
+root=$(df -h / | tail --lines 1 | awk '{print "["$3" / "$2"] ("$4" Free)"}')
+case "$1" in
+  "-h")
+    echo "home: $(df -h /home \
+      | tail --lines 1 | awk '{print "["$3" / "$2"] ("$4" Free)"}')" ;;
+  "-r")
+    echo "root: $(df -h / \
+      | tail --lines 1 | awk '{print "["$3" / "$2"] ("$4" Free)"}')" ;;
+esac

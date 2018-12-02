@@ -3,7 +3,7 @@ alias ber="bundle exec rspec"
 alias caaber="clear && bundle exec rspec"
 alias gcam="git commit -am"
 alias gco="git checkout"
-alias soundcloud-dl="scdl"
+# alias soundcloud-dl="scdl"
 alias v="vim"
 
 # preferred options
@@ -21,12 +21,12 @@ alias youtube-webm="youtube-dl --recode-video webm -o '%(title)s.%(ext)s'"
 
 # helpful mini-functions
 alias fix-pacman="sudo pacman -Syy"
+alias getxattr='getfattr -d -m ".*"'
 alias lanip="ip addr show | grep -o 'inet 192\.168\.[0-9]\.[0-9]*' | tail -c 12"
 alias pac-remove-orphans="sudo pacman -Rns $(pacman -Qtdq)"
 alias update="sudo pacman -Syu --noconfirm"
 alias update-dotfiles="git -C ~/.dotfiles pull"
 # alias tmux="tmux source-file ~/.config/tmux.conf" # delete this by 2019
-alias getxattr='getfattr -d -m ".*"'
 
 # silly things
 alias starwars="telnet towel.blinkenlights.nl"
@@ -54,4 +54,17 @@ function lint {
   ack if $1
   echo
   flog $1
+}
+
+function notify-ytdl {
+  notify-send --icon="$HOME/.config/youtube.png" "youtube-dl" "Finished downloading" >/dev/null 2>&1
+}
+
+function youtube-dl-notify {
+  youtube-dl $@
+  notify-ytdl
+}
+
+function youtube-fox {
+  firefox "https://www.youtube.com/watch?v=${1}"
 }
