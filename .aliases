@@ -20,7 +20,7 @@ alias youtube-rss="youtube-rss ~/Videos/youtube"
 alias youtube-webm="youtube-dl --recode-video webm -o '%(title)s.%(ext)s'"
 
 # helpful mini-functions
-# alias fix-pacman="sudo pacman -Syy" 
+# alias fix-pacman="sudo pacman -Syy"
 alias getxattr='getfattr -d -m ".*"'
 alias lanip="ip addr show | grep -o 'inet 192\.168\.[0-9]\.[0-9]*' | tail -c 12"
 # alias pac-remove-orphans="sudo pacman -Rns $(pacman -Qtdq)"
@@ -69,7 +69,20 @@ function youtube-fox {
   firefox "https://www.youtube.com/watch?v=${1}"
 }
 
-function net-install {
-  # if [[ $(echo /etc/os-release
-  sudo apt install $@
-}
+os=$(cat /etc/os-release | grep "ID=" | tail -c +4)
+
+# Package Management
+case $os in
+"manjaro")
+  function net-install { sudo pacman -S $@ }
+  function net-update { sudo pacman -Syu }
+    ;;
+"debian")
+  function net-install { sudo apt install $@ }
+  function net-update { sudo apt update; sudo apt full-upgrade }
+  ;;
+*)
+  function net-install { echo "net-install: Unknown system" }
+  function net-update { echo "net-update: Unknown system" }
+  ;;
+esac
