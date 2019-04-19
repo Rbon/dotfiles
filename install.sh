@@ -1,3 +1,4 @@
+#! /usr/bin/env bash
 ### WARNING: BEFORE RUNNING THIS, BACK UP ANY DOTFILES YOU DON'T WANT TO LOSE
 
 dotfiles=".aliases .dir_colors .vimrc .tmux.conf .zshrc"
@@ -16,6 +17,7 @@ function install_vundle {
   echo "Installing Vundle..."
   git clone --quiet \
     https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    vim +colorscheme blue +PluginInstall +qall
   echo "Done."
 }
 

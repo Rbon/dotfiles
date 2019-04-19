@@ -37,6 +37,7 @@ promptinit
 prompt redhat
 
 export PATH="$PATH:$HOME/.scripts"
+export PATH="$PATH:$HOME/.local/bin"
 export VK_ICD_FILENAMES="/usr/share/vulkan/icd.d/radeon_icd.x86_64.json"
 export KEYTIMEOUT=1 # decrese lag when switching to normal mode
 # export TERM=rxvt-unicode-256color
