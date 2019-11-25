@@ -15,9 +15,7 @@ alias ls="ls -AX --color=auto --group-directories-first"
 alias spotify="spotify --ap=194.132.196.162" ## fixes log-in problem
 alias subl3="subl3 -n"
 alias tmux="tmux -2"
-alias youtube-mp3="youtube-dl -x --audio-format=mp3"
 alias youtube-rss="youtube-rss ~/Videos/youtube"
-alias youtube-webm="youtube-dl --recode-video webm -o '%(title)s.%(ext)s'"
 
 # helpful mini-functions
 # alias fix-pacman="sudo pacman -Syy"
@@ -27,6 +25,8 @@ alias lanip="ip addr show | grep -o 'inet 192\.168\.[0-9]\.[0-9]*' | tail -c 12"
 alias update="sudo pacman -Syu --noconfirm"
 alias update-dotfiles="git -C ~/.dotfiles pull"
 # alias tmux="tmux source-file ~/.config/tmux.conf" # delete this by 2019
+alias youtube-mp3="youtube-dl -x --audio-format=mp3 -o '%(playlist_index)s - %(title)s.%(ext)s'"
+alias youtube-webm="youtube-dl --recode-video webm -o '%(title)s.%(ext)s'"
 
 # silly things
 alias starwars="telnet towel.blinkenlights.nl"
