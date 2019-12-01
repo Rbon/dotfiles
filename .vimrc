@@ -1,36 +1,3 @@
-" set nocompatible              " be iMproved, required
-                        " filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-                        " set rtp+=~/.vim/bundle/Vundle.vim
-                                                " call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-                        " Plugin 'VundleVim/Vundle.vim'
-
-                                                " Plugin 'gcmt/taboo.vim'
-
-" All of your Plugins must be added before the following line
-                        " call vundle#end()            " required
-                                                " filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
-set guioptions-=e
-set guioptions-=m
-set guioptions-=T
-set guifont=Hasklig\ Medium\ 16
 set nocompatible " be iMproved
 syntax enable " self explanatory
 set expandtab " turns <Tab> into spaces
@@ -154,13 +121,3 @@ let tablineTimer = timer_start(2000, 'RefreshTabline', {'repeat': -1})
 func RefreshTabline(timer)
   set tabline=%!MyTabLine()
 endfunc
-
-function! GitBranch()
-  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-endfunction
-
-function! StatuslineGit()
-  let l:branchname = GitBranch()
-  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
-endfunction
-
