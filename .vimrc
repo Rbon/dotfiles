@@ -55,7 +55,21 @@ set statusline=
 set statusline+=\ %f
 set statusline+=\ \line:\ %l
 
-let barInfo=" "
+let tab1=""
+let tab2=""
+let tab3=""
+let tab4=""
+let tab5=""
+
+function! GetBarInfo(buf, tabnum)
+  let tabNames = [g:tab1,g:tab2,g:tab3,g:tab4,g:tab5]
+  let name = tabNames[a:tabnum - 1]
+  if name == ""
+    return bufname(a:buf)
+  else
+    return name
+  endif
+endfunction
 
 if exists("+showtabline")
   function! MyTabLine()
@@ -83,7 +97,10 @@ if exists("+showtabline")
 
       "let s .= ' %*'
       let bufnr = buflist[winnr - 1]
-      let file = bufname(bufnr)
+      let g:barInfo = GetBarInfo(bufnr, i)
+      let file = g:barInfo
+      " let file = bufname(bufnr)
+
       let buftype = getbufvar(bufnr, 'buftype')
 
       if buftype == 'nofile'
@@ -107,7 +124,6 @@ if exists("+showtabline")
 
     let s .= '%T%#TabLineFill#%='
     let s .= strftime('%I:%M %p %B %d, %Y ')
-    let s .= g:barInfo
     let s .= " "
     return s
   endfunction
@@ -118,6 +134,6 @@ endif
 
 let tablineTimer = timer_start(2000, 'RefreshTabline', {'repeat': -1})
 
-func RefreshTabline(timer)
+func! RefreshTabline(timer)
   set tabline=%!MyTabLine()
 endfunc
