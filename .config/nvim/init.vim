@@ -6,18 +6,15 @@ if !filereadable(autoload_plug_path)
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 unlet autoload_plug_path
-
-" Plugins will be downloaded under the specified directory.
 call plug#begin('~/.vim/plugged')
 
-" Declare the list of plugins.
+" PLUGINS
 Plug 'altercation/vim-colors-solarized'
 
-" List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
+
 set nocompatible " be iMproved
-syntax enable " self explanatory
 set expandtab " turns <Tab> into spaces
 set softtabstop=2 " set tab width to 2 spaces (works with backspace too!)
 set list " show some shitespace characters
@@ -29,36 +26,38 @@ set splitbelow " similar
 set scrolloff=3 " Keep 3 lines below and above the cursor
 set background=light " for solorized
 set shell=/bin/zsh
-" colorscheme solarized
-set laststatus=2
-" set statusline=%{strftime('%H\:%M')}
-
-set colorcolumn=81 " make a column at the 81st char
-
-" color of said column
-highlight ColorColumn ctermbg=7
+set laststatus=1 " show statusline only if more than one buffer
+set textwidth=80 " line wrap
+colorscheme solarized
+syntax enable " self explanatory
 
 
 " KEYBINDS
-map      <leader>r :source ~/.vimrc<CR>
-map      <C-w>"    :vnew<CR>
-map      <C-w>z    :tabnew %<CR>
-map      <C-w>=    :new<CR>
-map      <C-t>     <Nop>
-map      <C-t>n    <Esc>:tabnew<CR>
-map      <C-t>l    <Esc>:tabnext<CR>
-map      <C-t>h    <Esc>:tabprevious<CR>
-map      <C-s>     <Esc>:w<CR>
-map      <C-o>     :edit<space>
-map      <C-t>r    :TabooRename<space>
-map      <C-t>R    :TabooReset<CR>
-tnoremap <leader>e <C-\><C-n>
-tnoremap <C-t>n    <C-\><C-n>:tabnew<CR>
-tnoremap <C-t>l    <C-\><C-n>:tabnext<CR>
-tnoremap <C-t>h    <C-\><C-n>:tabprevious<CR>
+noremap  <C-c>           <Nop>
+tnoremap <C-c>           <Nop>
+noremap  <leader>r            :source ~/.config/nvim/init.vim<CR>
+noremap  <C-w>"          <Esc>:vnew<CR>
+noremap  <C-w>z          <Esc>:tabnew %<CR>
+noremap  <C-w>=          <Esc>:new<CR>
+noremap  <C-a>c          <Esc>:tabnew<CR>:terminal<CR>i
+tnoremap <C-a>c     <C-\><C-n>:tabnew<CR>:terminal<CR>i
+noremap  <C-a><C-c>      <Esc>:tabnew<CR>:terminal<CR>i
+tnoremap <C-a><C-c> <C-\><C-n>:tabnew<CR>:terminal<CR>i
+noremap  <C-a>l          <Esc>:tabnext<CR>
+tnoremap <C-a>l     <C-\><C-n>:tabnext<CR>
+noremap  <C-a><C-l>      <Esc>:tabnext<CR>
+tnoremap <C-a><C-l> <C-\><C-n>:tabnext<CR>
+noremap  <C-a>h          <Esc>:tabprevious<CR>
+noremap  <C-a><C-h>      <Esc>:tabprevious<CR>
+tnoremap <C-a>h     <C-\><C-n>:tabprevious<CR>
+tnoremap <C-a><C-h> <C-\><C-n>:tabprevious<CR>
+noremap  <C-s>           <Esc>:w<CR>
+noremap  <C-o>           <Esc>:edit<space>
+tnoremap <C-o>           <Esc>:edit<space>
+tnoremap <leader>e  <C-\><C-n>
+
 
 " TABS
-
 hi TabLineSel term=bold cterm=none ctermfg=Red ctermbg=7 " current tab
 hi TabLine term=none cterm=none ctermfg=10 ctermbg=7 " other tabs
 hi TabWinNumSel term=bold cterm=bold ctermfg=90 ctermbg=30
