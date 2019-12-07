@@ -34,26 +34,35 @@ syntax enable " self explanatory
 
 " KEYBINDS
 noremap  <C-c>           <Nop>
-tnoremap <C-c>           <Nop>
 noremap  <leader>r            :source ~/.config/nvim/init.vim<CR>
-noremap  <C-w>"          <Esc>:vnew<CR>
-noremap  <C-w>z          <Esc>:tabnew %<CR>
-noremap  <C-w>=          <Esc>:new<CR>
-noremap  <C-a>c          <Esc>:tabnew<CR>:terminal<CR>i
-tnoremap <C-a>c     <C-\><C-n>:tabnew<CR>:terminal<CR>i
-noremap  <C-a><C-c>      <Esc>:tabnew<CR>:terminal<CR>i
-tnoremap <C-a><C-c> <C-\><C-n>:tabnew<CR>:terminal<CR>i
-noremap  <C-a>l          <Esc>:tabnext<CR>
-tnoremap <C-a>l     <C-\><C-n>:tabnext<CR>
-noremap  <C-a><C-l>      <Esc>:tabnext<CR>
-tnoremap <C-a><C-l> <C-\><C-n>:tabnext<CR>
-noremap  <C-a>h          <Esc>:tabprevious<CR>
-noremap  <C-a><C-h>      <Esc>:tabprevious<CR>
-tnoremap <C-a>h     <C-\><C-n>:tabprevious<CR>
-tnoremap <C-a><C-h> <C-\><C-n>:tabprevious<CR>
+noremap  <silent> <C-a>"          <Esc>:vnew<CR>
+tnoremap <silent> <C-a>"     <C-\><C-n>:vnew<CR>
+noremap  <silent> <C-a>=          <Esc>:new<CR>
+tnoremap <silent> <C-a>=     <C-\><C-n>:new<CR>
+noremap  <silent> <C-a>z          <Esc>:tabnew %<CR> " 'zoom'
+noremap  <silent> <C-a><C-c>      <Esc>:tabnew<CR>:terminal<CR>i
+tnoremap <silent> <C-a><C-c> <C-\><C-n>:tabnew<CR>:terminal<CR>i
+noremap  <silent> <C-a>h          <Esc><C-w>h
+tnoremap <silent> <C-a>h     <C-\><C-n><C-w>h
+noremap  <silent> <C-a><C-h>      <Esc>:tabprevious<CR>
+tnoremap <silent> <C-a><C-h> <C-\><C-n>:tabprevious<CR>
+noremap  <silent> <C-a>j          <Esc><C-w>j
+tnoremap <silent> <C-a>j     <C-\><C-n><C-w>j
+noremap  <silent> <C-a><C-j>      <Esc><C-w>j
+tnoremap <silent> <C-a><C-j> <C-\><C-n><C-w>j
+noremap  <silent> <C-a>k          <Esc><C-w>k
+tnoremap <silent> <C-a>k     <C-\><C-n><C-w>k
+noremap  <silent> <C-a><C-k>      <Esc><C-w>k
+tnoremap <silent> <C-a><C-k> <C-\><C-n><C-w>k
+noremap  <silent> <C-a>l          <Esc><C-w>l
+tnoremap <silent> <C-a>l     <C-\><C-n><C-w>l
+noremap  <silent> <C-a><C-l>      <Esc>:tabnext<CR>
+tnoremap <silent> <C-a><C-l> <C-\><C-n>:tabnext<CR>
+noremap  <C-a>Q          <Esc>:quit<CR>
+tnoremap <C-a>Q     <C-\><C-n>:quit<CR>
 noremap  <C-s>           <Esc>:w<CR>
 noremap  <C-o>           <Esc>:edit<space>
-tnoremap <C-o>           <Esc>:edit<space>
+tnoremap <C-o>      <C-\><C-n>:edit<space>
 tnoremap <leader>e  <C-\><C-n>
 
 
@@ -65,8 +74,8 @@ hi TabNumSel term=bold cterm=bold ctermfg=16 ctermbg=30
 
 hi TabLineFill term=none cterm=none ctermfg=16 ctermbg=7 "empty space after tabs
 hi TabWinNum term=bold cterm=bold ctermfg=90 ctermbg=145
-hi TabNum term=bold cterm=bold ctermfg=16 ctermbg=145
-hi StatusLine ctermbg=10 ctermfg=7
+hi TabNum term=bold cterm=bold ctermfg=17 ctermbg=145
+" hi StatusLine ctermbg=2 ctermfg=2
 
 set statusline=
 set statusline+=\ %f
