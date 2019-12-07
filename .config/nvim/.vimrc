@@ -1,3 +1,21 @@
+" Bootstrap Plug
+let autoload_plug_path = stdpath('config') . '/site/autoload/plug.vim'
+if !filereadable(autoload_plug_path)
+  silent execute '!curl -fLo ' . autoload_plug_path . '  --create-dirs 
+      \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+unlet autoload_plug_path
+
+" Plugins will be downloaded under the specified directory.
+call plug#begin('~/.vim/plugged')
+
+" Declare the list of plugins.
+Plug 'altercation/vim-colors-solarized'
+
+" List ends here. Plugins become visible to Vim after this call.
+call plug#end()
+
 set nocompatible " be iMproved
 syntax enable " self explanatory
 set expandtab " turns <Tab> into spaces
