@@ -4,7 +4,7 @@ alias caaber="clear && bundle exec rspec"
 alias gcam="git commit -am"
 alias gco="git checkout"
 # alias soundcloud-dl="scdl"
-alias v="vim"
+alias vim="nvim"
 
 # preferred options
 alias cmatrix="cmatrix -s -u 9 -C cyan"
