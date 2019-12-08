@@ -10,10 +10,12 @@ call plug#begin('~/.vim/plugged')
 
 " PLUGINS
 Plug 'altercation/vim-colors-solarized'
+Plug 'rbgrouleff/bclose.vim'
+Plug 'francoiscabrol/ranger.vim'
 
 call plug#end()
 
-
+let g:ranger_replace_netrw = 1 " open ranger when vim open a directory
 set nocompatible " be iMproved
 set expandtab " turns <Tab> into spaces
 set softtabstop=2 " set tab width to 2 spaces (works with backspace too!)
@@ -58,6 +60,8 @@ noremap  <silent> <C-a>l          <Esc><C-w>l
 tnoremap <silent> <C-a>l     <C-\><C-n><C-w>l
 noremap  <silent> <C-a><C-l>      <Esc>:tabnext<CR>
 tnoremap <silent> <C-a><C-l> <C-\><C-n>:tabnext<CR>
+noremap  <silent> <C-a><C-r>      <Esc>:tabnew<CR>:Ranger<CR>
+tnoremap <silent> <C-a><C-r> <C-\><C-n>:tabnew<CR>:Ranger<CR>
 noremap  <C-a>Q          <Esc>:quit<CR>
 tnoremap <C-a>Q     <C-\><C-n>:quit<CR>
 noremap  <C-s>           <Esc>:w<CR>
