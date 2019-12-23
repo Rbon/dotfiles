@@ -7,11 +7,13 @@ if !filereadable(autoload_plug_path)
 endif
 unlet autoload_plug_path
 call plug#begin('~/.vim/plugged')
-
-" PLUGINS
-Plug 'altercation/vim-colors-solarized'
+" PLUGINS == -> 
+" Plug 'altercation/vim-colors-solarized'
 Plug 'rbgrouleff/bclose.vim'
-Plug 'francoiscabrol/ranger.vim'
+" Plug 'vifm/vifm.vim'
+" Plug 'francoiscabrol/ranger.vim'
+Plug 'iCyMind/NeoSolarized'
+Plug 'scrooloose/nerdtree'
 
 call plug#end()
 
@@ -19,6 +21,7 @@ let g:ranger_replace_netrw = 1 " open ranger when vim open a directory
 set nocompatible " be iMproved
 set expandtab " turns <Tab> into spaces
 set softtabstop=2 " set tab width to 2 spaces (works with backspace too!)
+set tabstop=2 " set tab width to 2 spaces (works with backspace too!)
 set list " show some shitespace characters
 set listchars=tab:──,trail:·,extends:>,precedes:<, " whitespace char mappings
 set encoding=utf-8 " placebo
@@ -30,8 +33,25 @@ set background=light " for solorized
 set shell=/bin/zsh
 set laststatus=1 " show statusline only if more than one buffer
 set textwidth=80 " line wrap
-colorscheme solarized
+colorscheme NeoSolarized
 syntax enable " self explanatory
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set smartindent
+set smarttab
+set autochdir " align current directory with current file
+
+" FILE BROWSER STUFF
+" let g:netrw_banner = 0
+" let g:netrw_liststyle = 3
+" let g:netrw_browse_split = 0
+" let g:netrw_altv = 1
+" let g:netrw_winsize = 25
+" augroup ProjectDrawer
+  " autocmd!
+  " autocmd VimEnter * :Explore
+" augroup END
 
 
 " KEYBINDS
@@ -42,8 +62,8 @@ tnoremap <silent> <C-a>"     <C-\><C-n>:vnew<CR>
 noremap  <silent> <C-a>=          <Esc>:new<CR>
 tnoremap <silent> <C-a>=     <C-\><C-n>:new<CR>
 noremap  <silent> <C-a>z          <Esc>:tabnew %<CR> " 'zoom'
-noremap  <silent> <C-a><C-c>      <Esc>:tabnew<CR>:terminal<CR>i
-tnoremap <silent> <C-a><C-c> <C-\><C-n>:tabnew<CR>:terminal<CR>i
+noremap  <silent> <C-a><C-c>      <Esc>:tabnew<CR>
+tnoremap <silent> <C-a><C-c> <C-\><C-n>:tabnew<CR>
 noremap  <silent> <C-a>h          <Esc><C-w>h
 tnoremap <silent> <C-a>h     <C-\><C-n><C-w>h
 noremap  <silent> <C-a><C-h>      <Esc>:tabprevious<CR>
@@ -62,12 +82,13 @@ noremap  <silent> <C-a><C-l>      <Esc>:tabnext<CR>
 tnoremap <silent> <C-a><C-l> <C-\><C-n>:tabnext<CR>
 noremap  <silent> <C-a><C-r>      <Esc>:tabnew<CR>:Ranger<CR>
 tnoremap <silent> <C-a><C-r> <C-\><C-n>:tabnew<CR>:Ranger<CR>
-noremap  <C-a>Q          <Esc>:quit<CR>
-tnoremap <C-a>Q     <C-\><C-n>:quit<CR>
-noremap  <C-s>           <Esc>:w<CR>
-noremap  <C-o>           <Esc>:edit<space>
-tnoremap <C-o>      <C-\><C-n>:edit<space>
-tnoremap <leader>e  <C-\><C-n>
+noremap           <C-a>Q          <Esc>:quit<CR>
+tnoremap          <C-a>Q     <C-\><C-n>:quit<CR>
+noremap           <C-s>           <Esc>:w<CR>
+noremap           <C-o>           <Esc>:edit<space>
+tnoremap          <C-o>      <C-\><C-n>:edit<space>
+tnoremap          <leader>e  <C-\><C-n>
+noremap  <silent> <C-a><C-v> <Esc>:edit ~/.config/nvim/init.vim<CR>
 
 
 " TABS
