@@ -9,15 +9,15 @@ unlet autoload_plug_path
 call plug#begin('~/.vim/plugged')
 " PLUGINS == -> 
 " Plug 'altercation/vim-colors-solarized'
-Plug 'rbgrouleff/bclose.vim'
+" Plug 'rbgrouleff/bclose.vim'
 " Plug 'vifm/vifm.vim'
 " Plug 'francoiscabrol/ranger.vim'
 Plug 'iCyMind/NeoSolarized'
-Plug 'scrooloose/nerdtree'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'} " multi-line editing
+" Plug 'scrooloose/nerdtree'
 
 call plug#end()
 
-let g:ranger_replace_netrw = 1 " open ranger when vim open a directory
 set nocompatible " be iMproved
 set expandtab " turns <Tab> into spaces
 set softtabstop=2 " set tab width to 2 spaces (works with backspace too!)
@@ -31,7 +31,7 @@ set splitbelow " similar
 set scrolloff=3 " Keep 3 lines below and above the cursor
 set background=light " for solorized
 set shell=/bin/zsh
-set laststatus=1 " show statusline only if more than one buffer
+set laststatus=0 " don't show statusline (works most of the time lol)
 set textwidth=80 " line wrap
 colorscheme NeoSolarized
 syntax enable " self explanatory
@@ -41,18 +41,41 @@ set softtabstop=2
 set smartindent
 set smarttab
 set autochdir " align current directory with current file
+set clipboard=unnamedplus " use system clipboard
 
 " FILE BROWSER STUFF
-" let g:netrw_banner = 0
+let g:netrw_banner = 0
 " let g:netrw_liststyle = 3
 " let g:netrw_browse_split = 0
 " let g:netrw_altv = 1
 " let g:netrw_winsize = 25
-" augroup ProjectDrawer
-  " autocmd!
-  " autocmd VimEnter * :Explore
-" augroup END
+augroup ProjectDrawer
+  autocmd!
+  autocmd VimEnter * :Explore
+augroup END
 
+" TAB AUTOCOMPLETE
+function! Smart_TabComplete()
+  let line = getline('.')                         " current line
+
+  let substr = strpart(line, -1, col('.')+1)      " from the start of the current
+                                                  " line to one character right
+                                                  " of the cursor
+  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
+  if (strlen(substr)==0)                          " nothing to match on empty string
+    return "\<tab>"
+  endif
+  let has_period = match(substr, '\.') != -1      " position of period, if any
+  let has_slash = match(substr, '\/') != -1       " position of slash, if any
+  if (!has_period && !has_slash)
+    return "\<C-X>\<C-P>"                         " existing text matching
+  elseif ( has_slash )
+    return "\<C-X>\<C-F>"                         " file matching
+  else
+    return "\<C-X>\<C-O>"                         " plugin matching
+  endif
+endfunction
+inoremap <tab> <c-r>=Smart_TabComplete()<CR>
 
 " KEYBINDS
 noremap  <C-c>           <Nop>
@@ -64,6 +87,8 @@ tnoremap <silent> <C-a>=     <C-\><C-n>:new<CR>
 noremap  <silent> <C-a>z          <Esc>:tabnew %<CR> " 'zoom'
 noremap  <silent> <C-a><C-c>      <Esc>:tabnew<CR>
 tnoremap <silent> <C-a><C-c> <C-\><C-n>:tabnew<CR>
+noremap  <silent> <C-a>t          <Esc>:tabnew<CR>:terminal<CR>i
+tnoremap <silent> <C-a>t     <C-\><C-n>:tabnew<CR>:terminal<CR>i
 noremap  <silent> <C-a>h          <Esc><C-w>h
 tnoremap <silent> <C-a>h     <C-\><C-n><C-w>h
 noremap  <silent> <C-a><C-h>      <Esc>:tabprevious<CR>
@@ -111,9 +136,13 @@ let tab2=""
 let tab3=""
 let tab4=""
 let tab5=""
+let tab6=""
+let tab7=""
+let tab8=""
+let tab10=""
 
 function! GetBarInfo(buf, tabnum)
-  let tabNames = [g:tab1,g:tab2,g:tab3,g:tab4,g:tab5]
+  let tabNames = [g:tab1,g:tab2,g:tab3,g:tab4,g:tab5,g:tab6,g:tab7,g:tab8,g:tab10]
   let name = tabNames[a:tabnum - 1]
   if name == ""
     return bufname(a:buf)
