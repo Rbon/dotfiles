@@ -14,6 +14,7 @@ call plug#begin('~/.vim/plugged')
 " Plug 'francoiscabrol/ranger.vim'
 Plug 'iCyMind/NeoSolarized'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'} " multi-line editing
+Plug 'dense-analysis/ale'
 " Plug 'scrooloose/nerdtree'
 
 call plug#end()
@@ -114,6 +115,8 @@ noremap           <C-o>           <Esc>:edit<space>
 tnoremap          <C-o>      <C-\><C-n>:edit<space>
 tnoremap          <leader>e  <C-\><C-n>
 noremap  <silent> <C-a><C-v> <Esc>:edit ~/.config/nvim/init.vim<CR>
+noremap  <silent> <C-a>g          <Esc>:tabnew<CR>:terminal<CR>ighci<CR>
+tnoremap <silent> <C-a>g     <C-\><C-n>:tabnew<CR>:terminal<CR>ighci<CR>
 
 
 " TABS
