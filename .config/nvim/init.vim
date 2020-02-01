@@ -40,7 +40,7 @@ set splitright " makes new vertical windows spawn on the right
 set splitbelow " similar
 set scrolloff=3 " Keep 3 lines below and above the cursor
 set background=light " for solorized
-set shell=/bin/zsh
+set shell=zsh
 set laststatus=0 " don't show statusline (works most of the time lol)
 set textwidth=80 " line wrap
 colorscheme NeoSolarized
