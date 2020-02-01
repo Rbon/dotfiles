@@ -1,12 +1,15 @@
-" Bootstrap Plug
-let autoload_plug_path = stdpath('config') . '/site/autoload/plug.vim'
+" PLUG BOOTSTRAP {
+let plug_install = 0
+let autoload_plug_path = stdpath('config') . '/autoload/plug.vim'
 if !filereadable(autoload_plug_path)
-  silent execute '!curl -fLo ' . autoload_plug_path . '  --create-dirs 
-      \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    silent exe '!curl -fL --create-dirs -o ' . autoload_plug_path . 
+        \ ' https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+    execute 'source ' . fnameescape(autoload_plug_path)
+    let plug_install = 1
 endif
 unlet autoload_plug_path
-call plug#begin('~/.vim/plugged')
+
+call plug#begin('~/.config/nvim/plugins')
 " PLUGINS == -> 
 " Plug 'altercation/vim-colors-solarized'
 " Plug 'rbgrouleff/bclose.vim'
@@ -16,8 +19,14 @@ Plug 'iCyMind/NeoSolarized'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'} " multi-line editing
 Plug 'dense-analysis/ale'
 " Plug 'scrooloose/nerdtree'
-
 call plug#end()
+
+if plug_install
+    PlugInstall --sync
+endif
+unlet plug_install
+
+" }
 
 set nocompatible " be iMproved
 set expandtab " turns <Tab> into spaces
