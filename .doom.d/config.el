@@ -5,9 +5,11 @@
 ;;
 ;; Tell emacs where is your personal elisp lib dir
 (add-to-list 'load-path "~/.doom.d/lisp/")
+(add-to-list 'load-path "~/.doom.d/lisp/apt-mode")
 
-;; load the packaged named xyz.
-(load "narrow-indirect") ;; best not to include the ending “.el” or “.elc”
+(load "narrow-indirect")
+(load "apt-mode")
+
 
 
 (map! :leader
@@ -21,6 +23,24 @@
 
 (map! :leader
       :desc "narrow to page indirectly" "np" 'ni-narrow-to-page-indirect-other-window)
+
+(map! :leader
+      :desc "apt update" "au" 'apt-update)
+
+(map! :leader
+      :desc "apt upgrade" "aU" 'apt-upgrade)
+
+(map! :leader
+      :desc "apt install" "ai" 'apt-install)
+
+(map! :leader
+      :desc "apt remove" "ar" 'apt-remove)
+
+(map! :leader
+      :desc "apt autoremove" "aa" 'apt-autoremove)
+
+(map! :leader
+      :desc "apt search" "as" 'apt-search)
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
