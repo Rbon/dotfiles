@@ -31,6 +31,10 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     markdown
+     yaml
+     haskell
+     ruby
      lua
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -188,7 +192,7 @@ values."
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
    ;; (default 'cache)
-   dotspacemacs-auto-save-file-location 'cache
+   dotspacemacs-auto-save-file-location 'original
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
@@ -314,6 +318,9 @@ you should place your code here."
   (define-key evil-normal-state-map "j" 'evil-next-visual-line)
   (define-key evil-normal-state-map "k" 'evil-previous-visual-line)
 
+  (load-file "~/.emacs.d/custom/abc-mode.el")
+
+
   (defun expand-with-prefix ()
     (interactive)
     (setq current-prefix-arg '(4)) ; C-u
@@ -345,6 +352,17 @@ you should place your code here."
     (lua-send-buffer)
     (spacemacs/alternate-window))
 
+  (defun insert-shell-command-output (command)
+    "Get shell COMMAND output and insert it at point in current buffer."
+    (insert (shell-command-to-string command)))
+
+
+  (defun haskell-send-buffer-and-switch ()
+    (interactive)
+    (let ((file-name buffer-file-name))
+      (switch-to-buffer-other-window "*runhaskell*")
+      (call-process "runhaskell" nil t nil file-name)))
+
   (setq abbrev-file-name             ;; tell emacs where to read abbrev
         "~/.emacs.d/abbrev_defs")    ;; definitions from...
   (quietly-read-abbrev-file)
@@ -355,6 +373,7 @@ you should place your code here."
   (spacemacs/set-leader-keys "ol" 'lua-send-buffer-and-switch)
   (spacemacs/set-leader-keys "ok" 'kill-buffer-and-window)
   (spacemacs/set-leader-keys "or" 'undo-tree-redo)
+  (spacemacs/set-leader-keys "oh" 'haskell-send-buffer-and-switch)
 
   (spacemacs/declare-prefix "on" "narrow")
   (spacemacs/set-leader-keys "onf" 'narrow-and-unfold)
@@ -372,7 +391,7 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (lua-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+    (mmm-mode markdown-toc markdown-mode gh-md yaml-mode intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby lua-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

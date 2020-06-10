@@ -8,39 +8,43 @@
 (add-to-list 'load-path "~/.doom.d/lisp/apt-mode")
 
 (load "narrow-indirect")
-(load "apt-mode")
+(load "apt-mode")(require 'url)
+
+(defun download-file (&optional url download-dir download-name)
+  (interactive)
+  (let ((url (or url
+                 (read-string "Enter download URL: "))))
+    (let ((download-buffer (url-retrieve-synchronously url)))
+      (save-excursion
+        (set-buffer download-buffer)
+        ;; we may have to trim the http response
+        (goto-char (point-min))
+        (re-search-forward "^$" nil 'move)
+        (forward-char)
+        (delete-region (point-min) (point))
+        (write-file (concat (or download-dir
+                                "~/Downloads/")
+                            (or download-name
+                                (car (last (split-string url "/" t))))))))))
 
 
-
-(map! :leader
-      :desc "Open Eshell" "oe" 'eshell)
-
-(map! :leader
-      :desc "narrow to defun indirectly" "nd" 'ni-narrow-to-defun-indirect-other-window)
-
-(map! :leader
-      :desc "narrow to region indirectly" "nn" 'ni-narrow-to-region-indirect-other-window)
-
-(map! :leader
-      :desc "narrow to page indirectly" "np" 'ni-narrow-to-page-indirect-other-window)
-
-(map! :leader
-      :desc "apt update" "au" 'apt-update)
-
-(map! :leader
-      :desc "apt upgrade" "aU" 'apt-upgrade)
-
-(map! :leader
-      :desc "apt install" "ai" 'apt-install)
+(map! :leader :mode with-editor-mode
+      :desc "finish editing" "cf" 'with-editor-finish)
 
 (map! :leader
-      :desc "apt remove" "ar" 'apt-remove)
-
-(map! :leader
-      :desc "apt autoremove" "aa" 'apt-autoremove)
-
-(map! :leader
-      :desc "apt search" "as" 'apt-search)
+      :desc "Download a file" "d" 'download-file
+      :desc "Open Eshell" "oe" 'eshell
+      :desc "narrow to defun indirectly" "nd" 'ni-narrow-to-defun-indirect-other-window
+      :desc "narrow to region indirectly" "nn" 'ni-narrow-to-region-indirect-other-window
+      :desc "narrow to page indirectly" "np" 'ni-narrow-to-page-indirect-other-window
+      :desc "apt update" "au" 'apt-update
+      :desc "apt upgrade" "aU" 'apt-upgrade
+      :desc "apt install" "ai" 'apt-install
+      :desc "apt remove" "ar" 'apt-remove
+      :desc "apt autoremove" "aa" 'apt-autoremove
+      :desc "apt search" "as" 'apt-search
+      :desc "eval last sexp" "el" 'eval-last-sexp
+      :desc "eval and print last sexp" "ep" 'eval-print-last-sexp)
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
@@ -57,12 +61,13 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "monospace" :size 24))
+(setq doom-font (font-spec :family "Hasklig" :size 24))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+;; (setq doom-theme 'doom-one)
+(setq doom-theme 'doom-solarized-light)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
