@@ -384,6 +384,14 @@ you should place your code here."
       (switch-to-buffer-other-window "*runhaskell*")
       (call-process "runhaskell" nil t nil file-name)))
 
+  (defun make-bold ()
+    (interactive)
+    (org-emphasize ?*))
+
+  (defun make-italic ()
+    (interactive)
+    (org-emphasize ?/))
+
   (setq abbrev-file-name             ;; tell emacs where to read abbrev
         "~/.emacs.d/abbrev_defs")    ;; definitions from...
   (quietly-read-abbrev-file)
@@ -400,6 +408,8 @@ you should place your code here."
   (spacemacs/set-leader-keys "or" 'undo-tree-redo)
   (spacemacs/set-leader-keys "oh" 'haskell-send-buffer-and-switch)
   (spacemacs/set-leader-keys "oa" 'connect-to-atlas)
+  (spacemacs/set-leader-keys "ob" 'make-bold)
+  (spacemacs/set-leader-keys "oi" 'make-italic)
 
   (spacemacs/declare-prefix "on" "narrow")
   (spacemacs/set-leader-keys "onf" 'narrow-and-unfold)
